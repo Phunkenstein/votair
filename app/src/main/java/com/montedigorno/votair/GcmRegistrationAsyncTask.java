@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 /**
  * Created by Chris Harmon on 3/5/2016.
+ * Ref: https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/GcmEndpoints
  */
 class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
     private static Registration regService = null;
