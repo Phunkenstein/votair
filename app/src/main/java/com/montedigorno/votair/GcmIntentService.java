@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 /**
  * Created by Chris Harmon on 3/5/2016.
  * Ref: https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/GcmEndpoints
+ * Ref: http://developer.android.com/training/notify-user/build-notification.html#click
+ * Ref: http://developer.android.com/reference/android/content/Intent.html
  */
 public class GcmIntentService extends IntentService {
 
