@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,11 +15,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.Override;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -26,10 +29,20 @@ import java.util.List;
 public class ElectionFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    ArrayAdapter<String> mElectionAdapter;
+
+    private ArrayAdapter<String> mElectionAdapter;
 
     public ElectionFragment() {
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        FetchElectionTask electionTask = new FetchElectionTask();
+        electionTask.execute();
+        System.out.println("election task complete");
+    }
+
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -77,9 +90,15 @@ public class ElectionFragment extends Fragment {
             String electionJsonString = null;
 
             try {
-                URL url = new URL("http://placeholderurl.com");
+                URL url = new URL("https://rolz.org/api/?6d6");
                 urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
 
+
+                System.out.println("point 1");
+                int status = urlConnection.getResponseCode();
+                System.out.println(status);
                 InputStream inputStream = urlConnection.getInputStream();
                 StringBuffer buffer = new StringBuffer();
                 if (inputStream == null) {
@@ -98,6 +117,7 @@ public class ElectionFragment extends Fragment {
                 }
 
                 electionJsonString = buffer.toString();
+                System.out.println(electionJsonString);
 
             } catch (IOException e) {
                 Log.e("ElectionFragment", "Error ", e);
@@ -115,9 +135,8 @@ public class ElectionFragment extends Fragment {
                 }
             }
 
-            String[] retval = new String[] {"Election 1", "Election 2", "Election 3"};
-            return new String[1];
-            //return retval;
+
+            return null;
 
         }
 
