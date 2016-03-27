@@ -15,17 +15,22 @@ import com.google.api.server.spi.config.ApiNamespace;
 /**
  * Created by Chris Harmon on 3/20/2016.
  */
-@Api(name = "myApi",
+@Api(
+        name = "request",
         version = "v1",
-        namespace = @ApiNamespace(ownerDomain = "backend.application.uwm.example.com",
-                                ownerName = "backend.application.uwm.example.com",
-packagePath = ""))
+        namespace = @ApiNamespace(
+                ownerDomain = "backend.myapplication.uwm.example.com",
+                ownerName = "backend.myapplication.uwm.example.com",
+                packagePath=""
+        )
+)
 
 public class ServerBase {
 
     @ApiMethod(name = "doGet")
-    public String get(@Named("name") String name) {
-        return "{\n" +
+    public MyResponse get(@Named("name") String name) {
+        MyResponse resp = new MyResponse();
+        resp.setData( "{\n" +
                 "    \"election\": {\n" +
                 "    \"election_date\": \"20160415\",\n" +
                 "    \"polling_location\": \"locationstring\",\n" +
@@ -43,6 +48,7 @@ public class ServerBase {
                 "            }\n" +
                 "        }\n" +
                 "    }\n" +
-                "}";
+                "}");
+        return resp;
     }
 }
