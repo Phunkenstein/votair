@@ -2,19 +2,30 @@ package com.example.uwm.myapplication.backend;
 
 import java.io.IOException;
 
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.api.server.spi.config.Api;
+import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.ApiNamespace;
+
 /**
  * Created by Chris Harmon on 3/20/2016.
  */
-public class ServerBase extends HttpServlet {
+@Api(name = "myApi",
+        version = "v1",
+        namespace = @ApiNamespace(ownerDomain = "backend.application.uwm.example.com",
+                                ownerName = "backend.application.uwm.example.com",
+packagePath = ""))
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().write("{\n" +
+public class ServerBase {
+
+    @ApiMethod(name = "doGet")
+    public String get(@Named("name") String name) {
+        return "{\n" +
                 "    \"election\": {\n" +
                 "    \"election_date\": \"20160415\",\n" +
                 "    \"polling_location\": \"locationstring\",\n" +
@@ -32,17 +43,6 @@ public class ServerBase extends HttpServlet {
                 "            }\n" +
                 "        }\n" +
                 "    }\n" +
-                "}");
+                "}";
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
-    }
-
 }
