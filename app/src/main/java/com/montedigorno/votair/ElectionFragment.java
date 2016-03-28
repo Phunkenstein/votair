@@ -73,12 +73,12 @@ public class ElectionFragment extends Fragment {
 
         List<String> elections = new ArrayList<String>(Arrays.asList(dummyData));
 
-//        mElectionAdapter = new ArrayAdapter<String>(
-        //              getActivity(),
-        //            R.layout.list_item_election,
-        //          R.id.expandableListView,
-        //      elections
-        //);
+        mElectionAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                R.layout.main_list_item,
+                R.id.expandableListView,
+              elections
+        );
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
