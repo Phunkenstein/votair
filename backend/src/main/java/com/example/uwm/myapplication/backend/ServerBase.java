@@ -28,7 +28,7 @@ import com.google.api.server.spi.config.ApiNamespace;
 public class ServerBase {
 
     @ApiMethod(name = "doGet")
-    public MyResponse get(@Named("name") String name) {
+    public MyResponse doGet() {
         MyResponse resp = new MyResponse();
         resp.setData( "{\n" +
                 "    \"election\": {\n" +

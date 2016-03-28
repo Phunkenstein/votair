@@ -22,6 +22,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.example.uwm.myapplication.backend.request.Request;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -81,59 +86,82 @@ public class ElectionFragment extends Fragment {
     }
 
     public class FetchElectionTask extends AsyncTask<String, Void, String[]> {
-
+        private Request reqService = null;
         @Override
         protected String[] doInBackground(String... params) {
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-
-            String electionJsonString = null;
-
-            try {
-                URL url = new URL("https://rolz.org/api/?6d6");
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-
-                System.out.println("point 1");
-                int status = urlConnection.getResponseCode();
-                System.out.println(status);
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-                if (inputStream == null) {
-                    return null;
-                }
-
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-                    return null;
-                }
-
-                electionJsonString = buffer.toString();
-                System.out.println(electionJsonString);
-
-            } catch (IOException e) {
-                Log.e("ElectionFragment", "Error ", e);
-                return null;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e("ElectionFragment", "Error closing stream ", e);
-                    }
-                }
+            System.out.println("point 1");
+            if(reqService == null) {
+                Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                            @Override
+                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                                abstractGoogleClientRequest.setDisableGZipContent(true);
+                            }
+                        });
+                builder.setApplicationName("Votair!");
+                reqService = builder.build();
             }
+
+            // This will now contain the json string from the server.
+            String electionJsonString;
+            try {
+                System.out.println("Success");
+                electionJsonString = reqService.doGet().execute().getData();
+            } catch (IOException e) {
+                System.out.println("Error Getting Data From Server");
+                electionJsonString = "{}";
+            }
+
+//            HttpURLConnection urlConnection = null;
+//            BufferedReader reader = null;
+//
+//            String electionJsonString = null;
+//
+//            try {
+//                URL url = new URL("https://rolz.org/api/?6d6");
+//                urlConnection = (HttpURLConnection) url.openConnection();
+//                urlConnection.setRequestMethod("GET");
+//                urlConnection.connect();
+//
+//                System.out.println("point 2");
+//                int status = urlConnection.getResponseCode();
+//                System.out.println(status);
+//                InputStream inputStream = urlConnection.getInputStream();
+//                StringBuffer buffer = new StringBuffer();
+//                if (inputStream == null) {
+//                    return null;
+//                }
+//
+//                reader = new BufferedReader(new InputStreamReader(inputStream));
+//
+//                String line;
+//                while ((line = reader.readLine()) != null) {
+//                    buffer.append(line + "\n");
+//                }
+//
+//                if (buffer.length() == 0) {
+//                    return null;
+//                }
+//
+//                electionJsonString = buffer.toString();
+//                System.out.println(electionJsonString);
+//
+//            } catch (IOException e) {
+//                Log.e("ElectionFragment", "Error ", e);
+//                return null;
+//            } finally {
+//                if (urlConnection != null) {
+//                    urlConnection.disconnect();
+//                }
+//                if (reader != null) {
+//                    try {
+//                        reader.close();
+//                    } catch (final IOException e) {
+//                        Log.e("ElectionFragment", "Error closing stream ", e);
+//                    }
+//                }
+//            }
 
 
             return null;
