@@ -3,10 +3,7 @@ package com.example.uwm.myapplication.backend;
 import java.io.IOException;
 
 import javax.inject.Named;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import static com.example.uwm.myapplication.backend.OfyService.ofy;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
@@ -49,6 +46,48 @@ public class ServerBase {
                 "        }\n" +
                 "    }\n" +
                 "}");
+        return resp;
+    }
+
+    @ApiMethod(name = "updateProfile")
+    public MyResponse updateProfile( @Named( "num" )int num, @Named( "regId" )int regId ) {
+        MyResponse resp = new MyResponse();
+
+        //// Within the ProfileFragment we should have the following code:
+        // public static final String PREFS_NAME = "ProfilePrefs";
+        // SharedPreferences profile = context.getSharedPreferences(PREFS_NAME, 0);
+        // String regId = profile.getString("registration", false);
+        // private Request reqService = null;
+//            if(reqService == null) {
+//                Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+//                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+//                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+//                            @Override
+//                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+//                                abstractGoogleClientRequest.setDisableGZipContent(true);
+//                            }
+//                        });
+//                builder.setApplicationName("Votair!");
+//                reqService = builder.build();
+//            }
+//
+//            String resultJsonString;
+//            try {
+//                electionJsonString = reqService.updateProfile(regId, <numHours>).execute().getData();
+        //       // Check if the json object contains "success" or "failure"
+//            } catch (IOException e) {
+//                System.out.println("Error Getting Data From Server");
+//                electionJsonString = "{}";
+//            }
+
+        // Now find the user's profile via the regId, and update their values.
+        RegistrationRecord regRec = ofy().load().type(RegistrationRecord.class).filter("regId", regId).first().now();
+        regRec.setNumHoursOut(num);
+        ofy().save().entity(regRec).now();
+
+        resp.setData("{\"status\": \"success\"}");
+        //resp.setData("{\"status\": \"failure\"}");
+
         return resp;
     }
 }

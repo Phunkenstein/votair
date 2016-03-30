@@ -6,7 +6,7 @@ import com.googlecode.objectify.ObjectifyService;
 
 /**
  * Objectify service wrapper so we can statically register our persistence classes
- * More on Objectify here : https://code.google.com/p/objectify-appengine/
+ * More on Objectify here : https://github.com/objectify/objectify/wiki
  *
  */
 public class OfyService {

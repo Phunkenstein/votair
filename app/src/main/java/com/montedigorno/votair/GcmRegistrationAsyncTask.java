@@ -1,5 +1,6 @@
 package com.montedigorno.votair;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.content.Context;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
     private Context context;
 
     private static final String SENDER_ID = "933682362008";
+    public static final String PREFS_NAME = "ProfilePrefs";
 
     public GcmRegistrationAsyncTask(Context context) {
         this.context = context;
@@ -63,6 +65,9 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
             // The request to your server should be authenticated if your app
             // is using accounts.
             regService.register(regId).execute();
+            SharedPreferences profile = context.getSharedPreferences(PREFS_NAME, 0);
+            SharedPreferences.Editor editor = profile.edit();
+            editor.putString("registration", regId);
 
         } catch (IOException ex) {
             ex.printStackTrace();

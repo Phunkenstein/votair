@@ -13,9 +13,14 @@ public class RegistrationRecord {
 
     @Index
     private String regId;
-    // you can add more fields...
 
-    public RegistrationRecord() {}
+    // -1 indicates not to send any notifications.
+    // 0 indicates send notification as soon as polling opens.
+    // etc...
+    @Index
+    private int numHoursOut;
+
+    public RegistrationRecord() { numHoursOut = -1; }
 
     public String getRegId() {
         return regId;
@@ -24,4 +29,8 @@ public class RegistrationRecord {
     public void setRegId(String regId) {
         this.regId = regId;
     }
+
+    public int getNumHoursOut() { return numHoursOut; }
+
+    public void setNumHoursOut(int numDaysOut) { this.numHoursOut = numDaysOut; }
 }
