@@ -11,6 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ExpandableListView.OnGroupExpandListener;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import com.example.uwm.myapplication.backend.request.Request;
@@ -35,7 +42,10 @@ public class ElectionFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private ArrayAdapter<String> mElectionAdapter;
+    private ArrayList<String> elections;
+    private HashMap<String, List<String>> electionItemHash;
+    private ExpandableListView expView;
+    private ExpandableListAdapter mElectionAdapter;
 
     public ElectionFragment() {
     }
@@ -65,24 +75,46 @@ public class ElectionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String[] dummyData = {
-                "Election 1",
-                "Election 2",
-                "Election 3"
-        };
-
-        List<String> elections = new ArrayList<String>(Arrays.asList(dummyData));
-
-        mElectionAdapter = new ArrayAdapter<String>(
-                getActivity(),
-                R.layout.main_list_item,
-                R.id.expandableListView,
-              elections
-        );
-
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        expView = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
+
+        populateDummyList();
+        mElectionAdapter = new ExpandableListAdapter(this.getContext(),
+                elections,
+                electionItemHash);
+        expView.setAdapter(mElectionAdapter); //I have no idea why this doesn't work right.
+        //Something about it being a fragment and not an activity or something?
 
         return rootView;
+    }
+
+    private void populateDummyList(){
+        elections = new ArrayList<String>();
+        electionItemHash = new HashMap<String, List<String>>();
+
+        elections.add("Primaries");
+        elections.add("General Election");
+        elections.add("dummy Election");
+
+        List<String> primaries = new ArrayList<String>();
+        primaries.add("Republican");
+        primaries.add("Democrat");
+        primaries.add("Date to vote");
+        primaries.add("more stuff you need to know");
+
+        List<String> general = new ArrayList<String>();
+        general.add("Republican");
+        general.add("Democrat");
+        general.add("Date to vote");
+        general.add("vote already guies");
+
+        List<String> dummy = new ArrayList<String>();
+        dummy.add("Dummy item");
+        dummy.add("Another dummy item");
+
+        electionItemHash.put(elections.get(0), primaries);
+        electionItemHash.put(elections.get(1), general);
+        electionItemHash.put(elections.get(2), dummy);
     }
 
     public class FetchElectionTask extends AsyncTask<String, Void, String[]> {
