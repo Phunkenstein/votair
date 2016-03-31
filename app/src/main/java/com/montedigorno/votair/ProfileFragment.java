@@ -7,8 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.uwm.myapplication.backend.request.model.ProfileModel;
 
-import com.montedigorno.votair.models.ProfileModel;
+//import com.montedigorno.votair.models.ProfileModel;
 
 /**
  * A simple {@link Fragment} subclass.
