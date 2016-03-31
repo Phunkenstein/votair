@@ -1,5 +1,6 @@
 package com.montedigorno.votair;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,7 +42,7 @@ import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 public class ElectionFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-
+    private Context context;
     private ArrayList<String> elections;
     private HashMap<String, List<String>> electionItemHash;
     private ExpandableListView expView;
@@ -63,10 +64,9 @@ public class ElectionFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static ElectionFragment newInstance(int sectionNumber) {
+    public static ElectionFragment newInstance(Context context) {
         ElectionFragment fragment = new ElectionFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }

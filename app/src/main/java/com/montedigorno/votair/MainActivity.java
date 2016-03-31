@@ -141,7 +141,17 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return ElectionFragment.newInstance(position + 1);
+            switch (position) {
+                case 0:
+                    return ProfileFragment.newInstance(getApplicationContext());
+                case 1:
+                    return ElectionFragment.newInstance(getApplicationContext());
+                case 2:
+                    //    return VoterInformationFragment.newInstance(getApplicationContext());
+                    return ElectionFragment.newInstance(getApplicationContext()); //so it don't break
+                default:
+                    return null;
+            }
         }
 
         @Override
