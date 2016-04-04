@@ -99,13 +99,13 @@ public class ElectionFragment extends Fragment {
         List<String> primaries = new ArrayList<String>();
         primaries.add("Republican");
         primaries.add("Democrat");
-        primaries.add("Date to vote");
+        primaries.add("Date to vote\n04-05-2016");
         primaries.add("more stuff you need to know");
 
         List<String> general = new ArrayList<String>();
         general.add("Republican");
         general.add("Democrat");
-        general.add("Date to vote");
+        general.add("Date to vote\n11-03-2016");
         general.add("vote already guies");
 
         List<String> dummy = new ArrayList<String>();
