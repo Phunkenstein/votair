@@ -7,8 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.uwm.myapplication.backend.request.model.ProfileModel;
 
-import com.montedigorno.votair.models.ProfileModel;
+//import com.montedigorno.votair.models.ProfileModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +62,10 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    public void saveProfile(View view){
+
     }
 
 /*    // TODO: Rename method, update argument and hook method into UI event

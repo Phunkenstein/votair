@@ -5,6 +5,7 @@ package com.example.uwm.myapplication.backend;
  */
 public class MyResponse {
     private String myData;
+    private boolean success = false;
 
     public String getData() {
         return myData;
@@ -13,5 +14,13 @@ public class MyResponse {
 
     public void setData(String data) {
         myData = data;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.inject.Named;
 import static com.example.uwm.myapplication.backend.OfyService.ofy;
 
+import com.example.uwm.myapplication.backend.models.ElectionModel;
+import com.example.uwm.myapplication.backend.models.ProfileModel;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -24,33 +26,15 @@ import com.google.api.server.spi.config.ApiNamespace;
 
 public class ServerBase {
 
-    @ApiMethod(name = "doGet")
-    public MyResponse doGet() {
-        MyResponse resp = new MyResponse();
-        resp.setData( "{\n" +
-                "    \"election\": {\n" +
-                "    \"election_date\": \"20160415\",\n" +
-                "    \"polling_location\": \"locationstring\",\n" +
-                "    \n" +
-                "    \"ballot_items\": {\n" +
-                "        \"ballot_item_1\": {\n" +
-                "            \"info_link\": \"link_here\",\n" +
-                "            \"choice1\": \"choice1\",\n" +
-                "            \"choice2\": \"choice2\"    \n" +
-                "        },\n" +
-                "        \"ballot_item_2\": {\n" +
-                "            \"info_link\": \"link_here\",\n" +
-                "            \"choice1\": \"choice1\",\n" +
-                "            \"choice2\": \"choice2\"    \n" +
-                "            }\n" +
-                "        }\n" +
-                "    }\n" +
-                "}");
-        return resp;
+    @ApiMethod(name = "getElections")
+    public ElectionModel getElections() {
+        ElectionModel eleModel = new ElectionModel();
+        eleModel.setElectionName("Hopefully not trump.");
+        return eleModel;
     }
 
     @ApiMethod(name = "updateProfile")
-    public MyResponse updateProfile( @Named( "num" )int num, @Named( "regId" )int regId ) {
+    public MyResponse updateProfile( ProfileModel profile, @Named( "regId" )int regId ) {
         MyResponse resp = new MyResponse();
 
         //// Within the ProfileFragment we should have the following code:
@@ -73,7 +57,7 @@ public class ServerBase {
 //
 //            String resultJsonString;
 //            try {
-//                electionJsonString = reqService.updateProfile(regId, <numHours>).execute().getData();
+//                electionJsonString = reqService.updateProfile(profile, regId).execute().getData();
         //       // Check if the json object contains "success" or "failure"
 //            } catch (IOException e) {
 //                System.out.println("Error Getting Data From Server");
@@ -82,12 +66,16 @@ public class ServerBase {
 
         // Now find the user's profile via the regId, and update their values.
         RegistrationRecord regRec = ofy().load().type(RegistrationRecord.class).filter("regId", regId).first().now();
-        regRec.setNumHoursOut(num);
-        ofy().save().entity(regRec).now();
+        regRec.setProfile(profile);
 
-        resp.setData("{\"status\": \"success\"}");
-        //resp.setData("{\"status\": \"failure\"}");
+        resp.setSuccess(true);
 
         return resp;
+    }
+
+    @ApiMethod(name = "getProfile")
+    public ProfileModel getProfile( @Named( "regId" )int regId ) {
+        RegistrationRecord regRec = ofy().load().type(RegistrationRecord.class).filter("regId", regId).first().now();
+        return regRec.getProfile();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.uwm.myapplication.backend;
 
+import com.example.uwm.myapplication.backend.models.ProfileModel;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -18,9 +19,9 @@ public class RegistrationRecord {
     // 0 indicates send notification as soon as polling opens.
     // etc...
     @Index
-    private int numHoursOut;
+    private ProfileModel profile;
 
-    public RegistrationRecord() { numHoursOut = -1; }
+    public RegistrationRecord() { }
 
     public String getRegId() {
         return regId;
@@ -30,7 +31,11 @@ public class RegistrationRecord {
         this.regId = regId;
     }
 
-    public int getNumHoursOut() { return numHoursOut; }
+    public ProfileModel getProfile() {
+        return profile;
+    }
 
-    public void setNumHoursOut(int numDaysOut) { this.numHoursOut = numDaysOut; }
+    public void setProfile(ProfileModel profile) {
+        this.profile = profile;
+    }
 }

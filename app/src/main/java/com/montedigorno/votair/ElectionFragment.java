@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.uwm.myapplication.backend.request.model.ElectionModel;
 import com.example.uwm.myapplication.backend.request.Request;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -136,15 +137,16 @@ public class ElectionFragment extends Fragment {
             }
 
             // This will now contain the json string from the server.
-            String electionJsonString;
+            String electionName;
             try {
-                System.out.println("Success");
-                electionJsonString = reqService.doGet().execute().getData();
+                ElectionModel eleModel = reqService.getElections().execute();
+                electionName = eleModel.getElectionName();
             } catch (IOException e) {
                 System.out.println("Error Getting Data From Server");
-                electionJsonString = "{}";
+                electionName = "{}";
             }
 
+            System.out.println(electionName);
 //            HttpURLConnection urlConnection = null;
 //            BufferedReader reader = null;
 //
