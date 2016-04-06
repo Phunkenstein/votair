@@ -1,15 +1,21 @@
 package com.example.uwm.myapplication.backend;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Named;
+import javax.lang.model.type.ArrayType;
+
 import static com.example.uwm.myapplication.backend.OfyService.ofy;
+
 
 import com.example.uwm.myapplication.backend.models.ElectionModel;
 import com.example.uwm.myapplication.backend.models.ProfileModel;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.appengine.repackaged.org.joda.time.DateTime;
 
 /**
  * Created by Chris Harmon on 3/20/2016.
@@ -29,7 +35,31 @@ public class ServerBase {
     @ApiMethod(name = "getElections")
     public ElectionModel getElections() {
         ElectionModel eleModel = new ElectionModel();
-        eleModel.setElectionName("Hopefully not trump.");
+        eleModel.setElectionName("Primaries");
+        eleModel.setElectionDate("02-17-2016");
+
+        ArrayList<ArrayList<String>> ballotItems = new ArrayList<>();
+        ArrayList<String> item1 = new ArrayList<>();
+        item1.add("Democratic");
+        item1.add("<info about this ballot item>");
+        item1.add("Bernie");
+        item1.add("Clint");
+        ArrayList<String> item2 = new ArrayList<>();
+        item2.add("Republican");
+        item2.add("<info about this ballot item>");
+        item2.add("Zodiac");
+        item2.add("Hairpiece");
+        ArrayList<String> item3 = new ArrayList<>();
+        item3.add("Other");
+        item3.add("<info about this ballot item>");
+        item3.add("Judge");
+        item3.add("Different Judge");
+        ballotItems.add(item1);
+        ballotItems.add(item2);
+        ballotItems.add(item3);
+
+        eleModel.setBallotItems(ballotItems);
+
         return eleModel;
     }
 

@@ -1,9 +1,6 @@
 package com.example.uwm.myapplication.backend.models;
 
-
-// One or the other I guess?
-//import com.google.appengine.repackaged.com.google.api.client.util.DateTime;
-import com.google.appengine.repackaged.org.joda.time.DateTime;
+import java.util.ArrayList;
 
 /**
  * Created by brianhildebrand on 3/29/16.
@@ -11,7 +8,8 @@ import com.google.appengine.repackaged.org.joda.time.DateTime;
 public class ElectionModel {
 
     private String electionName;
-    private DateTime electionDate;
+    private String electionDate;
+    private ArrayList<ArrayList<String>> ballotItems;
 
     public String getElectionName() {
         return electionName;
@@ -21,11 +19,21 @@ public class ElectionModel {
         this.electionName = electionName;
     }
 
-    public DateTime getElectionDate() {
+
+
+    public String getElectionDate() {
         return electionDate;
     }
 
-    public void setElectionDate(DateTime electionDate) {
+    public void setElectionDate(String electionDate) {
         this.electionDate = electionDate;
+    }
+
+    public ArrayList<ArrayList<String>> getBallotItems() {
+        return ballotItems;
+    }
+
+    public void setBallotItems(ArrayList<ArrayList<String>> ballotItems) {
+        this.ballotItems = ballotItems;
     }
 }

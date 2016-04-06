@@ -18,15 +18,13 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
 import java.lang.Override;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,6 +46,8 @@ public class ElectionFragment extends Fragment {
     private HashMap<String, List<String>> electionItemHash;
     private ExpandableListView expView;
     private ExpandableListAdapter mElectionAdapter;
+    private ArrayList<ElectionModel> electionModels;
+
 
     public ElectionFragment() {
     }
@@ -55,8 +55,12 @@ public class ElectionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        electionModels = new ArrayList<>();
+
         FetchElectionTask electionTask = new FetchElectionTask();
         electionTask.execute();
+
         System.out.println("election task complete");
     }
 
@@ -79,7 +83,7 @@ public class ElectionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         expView = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
 
-        populateDummyList();
+        if (elections == null) populateDummyList();
         mElectionAdapter = new ExpandableListAdapter(this.getContext(),
                 elections,
                 electionItemHash);
@@ -88,6 +92,8 @@ public class ElectionFragment extends Fragment {
 
         return rootView;
     }
+
+
 
     private void populateDummyList(){
         elections = new ArrayList<String>();
@@ -116,7 +122,47 @@ public class ElectionFragment extends Fragment {
         electionItemHash.put(elections.get(0), primaries);
         electionItemHash.put(elections.get(1), general);
         electionItemHash.put(elections.get(2), dummy);
+        System.out.println("populating dummy list complete");
     }
+
+    private void populateList(){
+        elections.clear();
+        electionItemHash.clear();
+
+        ElectionModel electionModel1 = electionModels.get(0);
+        List<List<String>> ballotItems = electionModel1.getBallotItems();
+
+        System.out.println(electionModel1);
+        System.out.println(electionModel1.getBallotItems());
+
+
+        elections.add(electionModel1.getElectionName());
+        elections.add("General Election");
+        elections.add("dummy Election");
+
+        List<String> primaries = new ArrayList<String>();
+        primaries.add(ballotItems.get(0).get(0));
+        primaries.add(ballotItems.get(1).get(0));
+        primaries.add("Date to vote\n" + electionModel1.getElectionDate());
+        primaries.add("server does not currently return an info string with the election, only with each ballot item");
+
+        List<String> general = new ArrayList<String>();
+        general.add("Republican");
+        general.add("Democrat");
+        general.add("Date to vote\n11-03-2016");
+        general.add("vote already guies");
+
+        List<String> dummy = new ArrayList<String>();
+        dummy.add("Dummy item");
+        dummy.add("Another dummy item");
+
+        electionItemHash.put(elections.get(0), primaries);
+        electionItemHash.put(elections.get(1), general);
+        electionItemHash.put(elections.get(2), dummy);
+        System.out.println("populating list complete");
+    }
+
+
 
     public class FetchElectionTask extends AsyncTask<String, Void, String[]> {
         private Request reqService = null;
@@ -136,70 +182,22 @@ public class ElectionFragment extends Fragment {
                 reqService = builder.build();
             }
 
-            // This will now contain the json string from the server.
-            String electionName;
             try {
                 ElectionModel eleModel = reqService.getElections().execute();
-                electionName = eleModel.getElectionName();
+                electionModels.add(eleModel);
             } catch (IOException e) {
                 System.out.println("Error Getting Data From Server");
-                electionName = "{}";
             }
-
-            System.out.println(electionName);
-//            HttpURLConnection urlConnection = null;
-//            BufferedReader reader = null;
-//
-//            String electionJsonString = null;
-//
-//            try {
-//                URL url = new URL("https://rolz.org/api/?6d6");
-//                urlConnection = (HttpURLConnection) url.openConnection();
-//                urlConnection.setRequestMethod("GET");
-//                urlConnection.connect();
-//
-//                System.out.println("point 2");
-//                int status = urlConnection.getResponseCode();
-//                System.out.println(status);
-//                InputStream inputStream = urlConnection.getInputStream();
-//                StringBuffer buffer = new StringBuffer();
-//                if (inputStream == null) {
-//                    return null;
-//                }
-//
-//                reader = new BufferedReader(new InputStreamReader(inputStream));
-//
-//                String line;
-//                while ((line = reader.readLine()) != null) {
-//                    buffer.append(line + "\n");
-//                }
-//
-//                if (buffer.length() == 0) {
-//                    return null;
-//                }
-//
-//                electionJsonString = buffer.toString();
-//                System.out.println(electionJsonString);
-//
-//            } catch (IOException e) {
-//                Log.e("ElectionFragment", "Error ", e);
-//                return null;
-//            } finally {
-//                if (urlConnection != null) {
-//                    urlConnection.disconnect();
-//                }
-//                if (reader != null) {
-//                    try {
-//                        reader.close();
-//                    } catch (final IOException e) {
-//                        Log.e("ElectionFragment", "Error closing stream ", e);
-//                    }
-//                }
-//            }
-
 
             return null;
 
+        }
+
+        protected void onPostExecute(String[] strings) {
+            System.out.println("in post execute");
+            System.out.println(electionItemHash);
+            populateList();
+            mElectionAdapter.notifyDataSetChanged();
         }
 
     }
