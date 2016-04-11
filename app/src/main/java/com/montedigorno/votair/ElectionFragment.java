@@ -87,8 +87,15 @@ public class ElectionFragment extends Fragment {
         mElectionAdapter = new ExpandableListAdapter(this.getContext(),
                 elections,
                 electionItemHash);
-        expView.setAdapter(mElectionAdapter); //I have no idea why this doesn't work right.
-        //Something about it being a fragment and not an activity or something?
+        expView.setAdapter(mElectionAdapter);
+        expView.setOnChildClickListener(new OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id){
+                //TODO Logic to control what to do when a child item is clicked, and to do it.
+                return false;
+            }
+        });
 
         return rootView;
     }
