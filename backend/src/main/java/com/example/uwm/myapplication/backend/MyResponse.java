@@ -1,20 +1,15 @@
 package com.example.uwm.myapplication.backend;
 
+import java.util.List;
+
 /**
  * Created by Chris Harmon on 3/27/2016.
  */
 public class MyResponse {
-    private String myData;
+    private List<Long> myData;
     private boolean success = false;
 
-    public String getData() {
-        return myData;
-    }
 
-
-    public void setData(String data) {
-        myData = data;
-    }
 
     public boolean isSuccess() {
         return success;
@@ -22,5 +17,13 @@ public class MyResponse {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public List<Long> getMyData() {
+        return myData;
+    }
+
+    public void setMyData(List<Long> myData) {
+        this.myData = myData;
     }
 }

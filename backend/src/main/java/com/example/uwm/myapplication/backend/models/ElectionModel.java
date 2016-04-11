@@ -1,15 +1,31 @@
 package com.example.uwm.myapplication.backend.models;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.googlecode.objectify.Ref;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 /**
  * Created by brianhildebrand on 3/29/16.
  */
+@Entity
 public class ElectionModel {
 
+
+    @Id
+    public Long id;
+
+    @Index
     private String electionName;
+    @Index
     private String electionDate;
-    private ArrayList<ArrayList<String>> ballotItems;
+
+    private List<String> ballotItems;
+
+    private List<String> info;
 
     public String getElectionName() {
         return electionName;
@@ -29,11 +45,19 @@ public class ElectionModel {
         this.electionDate = electionDate;
     }
 
-    public ArrayList<ArrayList<String>> getBallotItems() {
+    public List<String> getBallotItems() {
         return ballotItems;
     }
 
-    public void setBallotItems(ArrayList<ArrayList<String>> ballotItems) {
+    public void setBallotItems(List<String> ballotItems) {
         this.ballotItems = ballotItems;
+    }
+
+    public List<String> getInfo() {
+        return info;
+    }
+
+    public void setInfo(List<String> info) {
+        this.info = info;
     }
 }
