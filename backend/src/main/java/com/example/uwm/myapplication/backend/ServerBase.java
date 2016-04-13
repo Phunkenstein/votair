@@ -50,7 +50,7 @@ public class ServerBase {
     }
 
     @ApiMethod(name = "updateProfile")
-    public MyResponse updateProfile( ProfileModel profile, @Named( "regId" )int regId ) {
+    public MyResponse updateProfile( ProfileModel profile ) {
         MyResponse resp = new MyResponse();
 
         //// Within the ProfileFragment we should have the following code:
@@ -81,8 +81,9 @@ public class ServerBase {
 //            }
 
         // Now find the user's profile via the regId, and update their values.
-        RegistrationRecord regRec = ofy().load().type(RegistrationRecord.class).filter("regId", regId).first().now();
-        regRec.setProfile(profile);
+        ProfileModel profRec = ofy().load().type(ProfileModel.class).filter("regId", profile.getRedID()).first().now();
+        ofy().delete().entity(profRec);
+        ofy().save().entity(profile).now();
 
         resp.setSuccess(true);
 
@@ -91,7 +92,8 @@ public class ServerBase {
 
     @ApiMethod(name = "getProfile")
     public ProfileModel getProfile( @Named( "regId" )int regId ) {
-        RegistrationRecord regRec = ofy().load().type(RegistrationRecord.class).filter("regId", regId).first().now();
-        return regRec.getProfile();
+        ProfileModel prof = ofy().load().type(ProfileModel.class).filter("regId", regId).first().now();
+        if (prof ==  null) return new ProfileModel();
+        return prof;
     }
 }

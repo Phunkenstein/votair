@@ -64,8 +64,6 @@ public class StartupListener implements ServletContextListener {
         eleModel3.setBallotItems(ballotItems3);
 
         // Saving them to the datastore.
-        //ObjectifyService.register(ArrayList.class);
-        ObjectifyService.register(ElectionModel.class);
         ofy().save().entity(eleModel1).now();
         ofy().save().entity(eleModel2).now();
         ofy().save().entity(eleModel3).now();
