@@ -39,6 +39,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return childPosition;
     }
 
+    //Needed for override below
+    public Context get_context(){return _context;}
+    //this is overridden(again) in the actual adapter declaration in ElectionFragment.
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {

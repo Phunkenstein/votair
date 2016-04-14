@@ -1,8 +1,10 @@
 package com.montedigorno.votair;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,8 +25,11 @@ import java.io.IOException;
 
 import java.lang.Override;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,12 +91,52 @@ public class ElectionFragment extends Fragment {
         if (elections == null) populateDummyList();
         mElectionAdapter = new ExpandableListAdapter(this.getContext(),
                 elections,
-                electionItemHash);
+                electionItemHash)
+//        {
+//            //TODO this is where we allow for alternate views from textview, and define them using our data.
+//            @Override
+//            public View getChildView(int groupPosition, final int childPosition,
+//                                     boolean isLastChild, View convertView, ViewGroup parent) {
+//
+//                final String childText = (String) getChild(groupPosition, childPosition);
+//
+//                if (convertView == null) {
+//                    LayoutInflater infalInflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                    convertView = infalInflater.inflate(R.layout.main_list_item, null);
+//                }
+//
+//                TextView txtListChild = (TextView) convertView
+//                        .findViewById(R.id.lblListItem);
+//
+//                txtListChild.setText(childText);
+//                return convertView;
+//            }
+//
+//        }
+        ;
         expView.setAdapter(mElectionAdapter);
         expView.setOnChildClickListener(new OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id){
+                if (childPosition==0){//Date, add to calender
+                    Intent calIntent = new Intent(Intent.ACTION_INSERT);
+                    calIntent.setData(CalendarContract.Events.CONTENT_URI);
+                    calIntent.setType("vnd.android.cursor.item/event");
+                    calIntent.putExtra(CalendarContract.Events.TITLE, "Vote in " + electionModels.get(groupPosition).getElectionName());
+                    calIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Voting Place"); //TODO get actual polling location here
+                    calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
+                    try{
+                            Date electionDate = new SimpleDateFormat(
+                                    electionModels.get(groupPosition).getElectionDateFormat()).
+                                    parse(electionModels.get(groupPosition).getElectionDate());
+                        calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, electionDate);
+                        calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, electionDate);
+                    } catch (Exception e){
+                        System.out.println("Error parsing date string");
+                    }
+                    startActivity(calIntent);
+                }
                 //TODO Logic to control what to do when a child item is clicked, and to do it.
                 return false;
             }
@@ -133,6 +178,7 @@ public class ElectionFragment extends Fragment {
     }
 
     private void populateList(){
+        //TODO get this working for multiple elections, with less hard coding.
         elections.clear();
         electionItemHash.clear();
 
