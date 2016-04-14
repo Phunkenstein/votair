@@ -23,7 +23,6 @@ public class ElectionModel {
     @Index
     private String electionDate;
     private String electionDateFormat = "MM-dd-yyyy";  //This will be in SimpleDateFormat, IE MM/dd/yyyy
-    private ArrayList<ArrayList<String>> ballotItems;
 
     private List<String> ballotItems;
 
