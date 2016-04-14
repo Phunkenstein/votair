@@ -32,39 +32,25 @@ import com.google.appengine.repackaged.org.joda.time.DateTime;
 
 public class ServerBase {
 
-    @ApiMethod(name = "getElections")
-    public ElectionModel getElections() {
-        ElectionModel eleModel = new ElectionModel();
-        eleModel.setElectionName("Primaries");
-        eleModel.setElectionDate("02-17-2016");
+    @ApiMethod(name = "getElectionIds")
+    public MyResponse getElectionIds() {
+        List<ElectionModel> models = ofy().load().type(ElectionModel.class).limit(10).list();
+        List<Long> ids = new ArrayList<>();
+        MyResponse resp = new MyResponse();
+        for (ElectionModel m : models) {
+            ids.add(m.id);
+        }
+        resp.setMyData(ids);
+        return resp;
+    }
 
-        ArrayList<ArrayList<String>> ballotItems = new ArrayList<>();
-        ArrayList<String> item1 = new ArrayList<>();
-        item1.add("Democratic");
-        item1.add("<info about this ballot item>");
-        item1.add("Bernie");
-        item1.add("Clint");
-        ArrayList<String> item2 = new ArrayList<>();
-        item2.add("Republican");
-        item2.add("<info about this ballot item>");
-        item2.add("Zodiac");
-        item2.add("Hairpiece");
-        ArrayList<String> item3 = new ArrayList<>();
-        item3.add("Other");
-        item3.add("<info about this ballot item>");
-        item3.add("Judge");
-        item3.add("Different Judge");
-        ballotItems.add(item1);
-        ballotItems.add(item2);
-        ballotItems.add(item3);
-
-        eleModel.setBallotItems(ballotItems);
-
-        return eleModel;
+    @ApiMethod(name = "getElection")
+    public ElectionModel getElection(@Named("id") Long id) {
+        return ofy().load().type(ElectionModel.class).filter("id", id).first().now();
     }
 
     @ApiMethod(name = "updateProfile")
-    public MyResponse updateProfile( ProfileModel profile, @Named( "regId" )int regId ) {
+    public MyResponse updateProfile( ProfileModel profile ) {
         MyResponse resp = new MyResponse();
 
         //// Within the ProfileFragment we should have the following code:
@@ -95,8 +81,9 @@ public class ServerBase {
 //            }
 
         // Now find the user's profile via the regId, and update their values.
-        RegistrationRecord regRec = ofy().load().type(RegistrationRecord.class).filter("regId", regId).first().now();
-        regRec.setProfile(profile);
+        ProfileModel profRec = ofy().load().type(ProfileModel.class).filter("regId", profile.getRedID()).first().now();
+        ofy().delete().entity(profRec);
+        ofy().save().entity(profile).now();
 
         resp.setSuccess(true);
 
@@ -105,7 +92,8 @@ public class ServerBase {
 
     @ApiMethod(name = "getProfile")
     public ProfileModel getProfile( @Named( "regId" )int regId ) {
-        RegistrationRecord regRec = ofy().load().type(RegistrationRecord.class).filter("regId", regId).first().now();
-        return regRec.getProfile();
+        ProfileModel prof = ofy().load().type(ProfileModel.class).filter("regId", regId).first().now();
+        if (prof ==  null) return new ProfileModel();
+        return prof;
     }
 }

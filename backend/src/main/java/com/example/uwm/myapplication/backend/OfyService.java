@@ -1,5 +1,7 @@
 package com.example.uwm.myapplication.backend;
 
+import com.example.uwm.myapplication.backend.models.ElectionModel;
+import com.example.uwm.myapplication.backend.models.ProfileModel;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
@@ -13,6 +15,8 @@ public class OfyService {
 
     static {
         ObjectifyService.register(RegistrationRecord.class);
+        ObjectifyService.register(ProfileModel.class);
+        ObjectifyService.register(ElectionModel.class);
     }
 
     public static Objectify ofy() {

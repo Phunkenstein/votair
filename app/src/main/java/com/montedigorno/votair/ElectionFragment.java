@@ -28,6 +28,7 @@ import java.lang.Override;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -182,36 +183,34 @@ public class ElectionFragment extends Fragment {
         elections.clear();
         electionItemHash.clear();
 
-        ElectionModel electionModel1 = electionModels.get(0);
-        List<List<String>> ballotItems = electionModel1.getBallotItems();
+        for( ElectionModel election : electionModels ) {
+            elections.add(election.getElectionName());
 
-        System.out.println(electionModel1);
-        System.out.println(electionModel1.getBallotItems());
+            List<List<String>> ballotItems = new ArrayList<>();
+            for ( String l : election.getBallotItems() ) {
+                ballotItems.add(Arrays.asList(l.split(",")));
+            }
 
+            List<String> electionSections = new ArrayList<>();
+            electionSections.add("Date To Vote: " + election.getElectionDate());
+            for (List<String> section : ballotItems) {
+                // Item 1 is section name (Displayed as the item to click to expand this data)
+                electionSections.add(section.get(0));
+                // Item 2 is section info
 
-        elections.add(electionModel1.getElectionName());
-        elections.add("General Election");
-        elections.add("dummy Election");
+                // Further items are choices
+                for( int i = 2; i < section.size(); i++) {
 
-        List<String> primaries = new ArrayList<String>();
-        primaries.add(ballotItems.get(0).get(0));
-        primaries.add(ballotItems.get(1).get(0));
-        primaries.add("Date to vote\n" + electionModel1.getElectionDate());
-        primaries.add("server does not currently return an info string with the election, only with each ballot item");
-
-        List<String> general = new ArrayList<String>();
-        general.add("Republican");
-        general.add("Democrat");
-        general.add("Date to vote\n11-03-2016");
-        general.add("vote already guies");
-
-        List<String> dummy = new ArrayList<String>();
-        dummy.add("Dummy item");
-        dummy.add("Another dummy item");
-
-        electionItemHash.put(elections.get(0), primaries);
-        electionItemHash.put(elections.get(1), general);
-        electionItemHash.put(elections.get(2), dummy);
+                }
+            }
+            // After choices, display info (may be links)
+            if( election.getInfo() != null ) {
+                for ( String info : election.getInfo() ) {
+                    electionSections.add(info);
+                }
+            }
+            electionItemHash.put(election.getElectionName(), electionSections);
+        }
         System.out.println("populating list complete");
     }
 
@@ -236,8 +235,10 @@ public class ElectionFragment extends Fragment {
             }
 
             try {
-                ElectionModel eleModel = reqService.getElections().execute();
-                electionModels.add(eleModel);
+                List<Long> electionIds = reqService.getElectionIds().execute().getMyData();
+                for (Long id : electionIds ) {
+                    electionModels.add(reqService.getElection(id).execute());
+                }
             } catch (IOException e) {
                 System.out.println("Error Getting Data From Server");
             }

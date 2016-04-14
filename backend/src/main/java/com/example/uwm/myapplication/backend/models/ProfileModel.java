@@ -1,12 +1,28 @@
 package com.example.uwm.myapplication.backend.models;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
+
 /**
  * Created by brianhildebrand on 3/29/16.
  */
+@Entity
 public class ProfileModel {
 
+    @Id
+    Long id;
+
+    @Index
+    private String redID;
+
+    @Index
     private String firstName;
+    @Index
     private String lastName;
+    @Index
+    private int numDaysOut;
+
     private int houseNumber;
     private String streetName;
     private String state;
@@ -96,4 +112,19 @@ public class ProfileModel {
         this.dayOfBirthDD = dayOfBirthDD;
     }
 
+    public int getNumDaysOut() {
+        return numDaysOut;
+    }
+
+    public void setNumDaysOut(int numDaysOut) {
+        this.numDaysOut = numDaysOut;
+    }
+
+    public String getRedID() {
+        return redID;
+    }
+
+    public void setRedID(String redID) {
+        this.redID = redID;
+    }
 }
