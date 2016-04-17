@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.uwm.myapplication.backend.request.Request;
@@ -46,7 +48,6 @@ public class ProfileFragment extends Fragment {
     private View profView;
     public static final String PREFS_NAME = "ProfilePrefs";
 
-
 //    private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
@@ -70,21 +71,12 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getActivity();
+        context = this.getActivity();
         profile = context.getSharedPreferences(PREFS_NAME, 0);
         String regId = profile.getString("registration", "");
 
         FetchProfileTask profileTask = new FetchProfileTask();
         profileTask.execute(regId);
-        //profileModel = profileTask.execute(regId);
-
-        profileModel = new ProfileModel();
-        profileModel.setCity("Milwaukee");
-        profileModel.setDayOfBirthDD(3);
-        profileModel.setFirstName("Juba");
-        profileModel.setLastName("Dance");
-        profileModel.setHouseNumber(4);
-        profileModel.setStreetName("Tor Street");
 
         System.out.println("election task complete");
 
@@ -117,14 +109,46 @@ public class ProfileFragment extends Fragment {
         profView = inflater.inflate(R.layout.fragment_profile, container, false);
 
         Button saveButton = (Button) profView.findViewById(R.id.saveButtonId);
-        saveButton.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                SaveProfileTask saveProfile = new SaveProfileTask();
-                saveProfile.execute();
+
+        if (profileModel == null){
+            profileModel = new ProfileModel();
+        }
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                if (profileModel == null) {profileModel = new ProfileModel();}
+                setProfileModel();
+                SaveProfileTask task = new SaveProfileTask();
+                task.execute();
+            }
+
+            private void setProfileModel(){
+                profileModel.setRegId(profile.getString("registration", ""));
+                EditText firstNameText = (EditText)profView.findViewById(R.id.firstNameid);
+                EditText lastNameText = (EditText)profView.findViewById(R.id.lastNameid);
+                EditText dateOfBirthText = (EditText)profView.findViewById(R.id.dateOfBirthid);
+                EditText addressStreet = (EditText)profView.findViewById(R.id.homeAddressStreetId);
+                EditText addressNumber = (EditText)profView.findViewById(R.id.houseNumberId);
+
+                String firstNameString = firstNameText.getText().toString();
+                String lastNameString = lastNameText.getText().toString();
+                //DateTime dateOfBirthDate = dateOfBirthText.getText().toString().
+                String addressStreetString = addressStreet.getText().toString();
+                String addressNumberString = addressNumber.getText().toString();
+
+                profileModel.setFirstName(firstNameString);
+                profileModel.setLastName(lastNameString);
+                try {
+                    profileModel.setHouseNumber(Integer.parseInt(addressNumberString));
+                }
+                catch (NumberFormatException e){
+                    System.out.println(e);
+                }
+                profileModel.setStreetName(addressStreetString);
             }
         });
 
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return profView;
     }
 
     public class SaveProfileTask extends AsyncTask<String, Void, Boolean> {
@@ -146,13 +170,23 @@ public class ProfileFragment extends Fragment {
                 reqService = builder.build();
             }
             try {
-                profileModel.setRegId(params[0]);
+                //profileModel.setHouseNumber((R.id.houseNumberId));
+                String regId = profile.getString("registration", "");
+                profileModel.setRegId(regId);
                 reqService.updateProfile(profileModel);
                 return true;
             } catch (IOException e) {
                 System.out.println("Error retrieving profile data from server");
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result){
+            CharSequence text = "Profile Saved";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
     }
 
@@ -184,8 +218,9 @@ public class ProfileFragment extends Fragment {
             return null;
         }
 
-        protected void onPostExecute(String[] strings) {
+        protected void onPostExecute(ProfileModel model) {
             System.out.println("in post execute");
+            profileModel = model;
 
             TextView firstName= (TextView)profView.findViewById(R.id.firstNameid);
             TextView lastName = (TextView)profView.findViewById(R.id.lastNameid);
