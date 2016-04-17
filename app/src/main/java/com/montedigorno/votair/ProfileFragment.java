@@ -70,17 +70,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        context = getActivity();
         profile = context.getSharedPreferences(PREFS_NAME, 0);
         String regId = profile.getString("registration", "");
-
-        Button saveButton = (Button) profView.findViewById(R.id.saveButtonId);
-        saveButton.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                SaveProfileTask saveProfile = new SaveProfileTask();
-                saveProfile.execute();
-            }
-        });
 
         FetchProfileTask profileTask = new FetchProfileTask();
         profileTask.execute(regId);
@@ -122,8 +114,15 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        profView = (View) rootView.findViewById(R.id.expandableListView);
+        profView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        Button saveButton = (Button) profView.findViewById(R.id.saveButtonId);
+        saveButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                SaveProfileTask saveProfile = new SaveProfileTask();
+                saveProfile.execute();
+            }
+        });
 
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
