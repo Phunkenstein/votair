@@ -1,11 +1,9 @@
 package com.example.uwm.myapplication.backend;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Named;
-import javax.lang.model.type.ArrayType;
 
 import static com.example.uwm.myapplication.backend.OfyService.ofy;
 
@@ -15,7 +13,6 @@ import com.example.uwm.myapplication.backend.models.ProfileModel;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import com.google.appengine.repackaged.org.joda.time.DateTime;
 
 /**
  * Created by Chris Harmon on 3/20/2016.
@@ -81,7 +78,7 @@ public class ServerBase {
 //            }
 
         // Now find the user's profile via the regId, and update their values.
-        ProfileModel profRec = ofy().load().type(ProfileModel.class).filter("regId", profile.getRedID()).first().now();
+        ProfileModel profRec = ofy().load().type(ProfileModel.class).filter("regId", profile.getRegId()).first().now();
         ofy().delete().entity(profRec);
         ofy().save().entity(profile).now();
 
@@ -91,7 +88,7 @@ public class ServerBase {
     }
 
     @ApiMethod(name = "getProfile")
-    public ProfileModel getProfile( @Named( "regId" )int regId ) {
+    public ProfileModel getProfile( @Named( "regId" )String regId ) {
         ProfileModel prof = ofy().load().type(ProfileModel.class).filter("regId", regId).first().now();
         if (prof ==  null) return new ProfileModel();
         return prof;

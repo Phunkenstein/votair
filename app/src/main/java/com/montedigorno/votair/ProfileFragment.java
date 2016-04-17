@@ -1,13 +1,32 @@
 package com.montedigorno.votair;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ExpandableListView;
+import android.widget.TextView;
+
+
+import com.example.uwm.myapplication.backend.request.Request;
 import com.example.uwm.myapplication.backend.request.model.ProfileModel;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 //import com.montedigorno.votair.models.ProfileModel;
 
@@ -20,15 +39,13 @@ import com.example.uwm.myapplication.backend.request.model.ProfileModel;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private SharedPreferences profile;
     private Context context;
+    private ProfileModel profileModel;
+    private View profView;
+    public static final String PREFS_NAME = "ProfilePrefs";
+
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -54,20 +71,146 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        profile = context.getSharedPreferences(PREFS_NAME, 0);
+        String regId = profile.getString("registration", "");
 
+        Button saveButton = (Button) profView.findViewById(R.id.saveButtonId);
+        saveButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                SaveProfileTask saveProfile = new SaveProfileTask();
+                saveProfile.execute();
+            }
+        });
+
+        FetchProfileTask profileTask = new FetchProfileTask();
+        profileTask.execute(regId);
+        //profileModel = profileTask.execute(regId);
+
+        profileModel = new ProfileModel();
+        profileModel.setCity("Milwaukee");
+        profileModel.setDayOfBirthDD(3);
+        profileModel.setFirstName("Juba");
+        profileModel.setLastName("Dance");
+        profileModel.setHouseNumber(4);
+        profileModel.setStreetName("Tor Street");
+
+        System.out.println("election task complete");
+
+    }
+
+
+    private Date generateDateOfBirth() {
+        String day = profileModel.getDayOfBirthDD().toString();
+        String month = profileModel.getMonthOfBirthMM().toString();
+        String year = profileModel.getYearOfBirthCCYY().toString();
+
+        String completeDate = year + "." + month + "." + day;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd");
+
+        Date retVal = null;
+
+        try {
+            retVal = dateFormat.parse(completeDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return retVal;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        profView = (View) rootView.findViewById(R.id.expandableListView);
+
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
-    public void saveProfile(View view){
+    public class SaveProfileTask extends AsyncTask<String, Void, Boolean> {
+        private Request reqService = null;
 
+        @Override
+        protected Boolean doInBackground(String... params) {
+
+            if (reqService == null) {
+                Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                            @Override
+                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                                abstractGoogleClientRequest.setDisableGZipContent(true);
+                            }
+                        });
+                builder.setApplicationName("Votair!");
+                reqService = builder.build();
+            }
+            try {
+                profileModel.setRegId(params[0]);
+                reqService.updateProfile(profileModel);
+                return true;
+            } catch (IOException e) {
+                System.out.println("Error retrieving profile data from server");
+            }
+            return null;
+        }
     }
 
+    public class FetchProfileTask extends AsyncTask<String, Void, ProfileModel> {
+        private Request reqService = null;
+        private ProfileModel profileModel = null;
+
+        @Override
+        protected ProfileModel doInBackground(String... params) {
+            if (reqService == null) {
+                Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                            @Override
+                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+                                abstractGoogleClientRequest.setDisableGZipContent(true);
+                            }
+                        });
+                builder.setApplicationName("Votair!");
+                reqService = builder.build();
+            }
+            try {
+                String regId = params[0];
+                profileModel = reqService.getProfile(regId).execute();
+            }
+            catch (IOException e) {
+                System.out.println("Error retrieving profile data from server");
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String[] strings) {
+            System.out.println("in post execute");
+
+            TextView firstName= (TextView)profView.findViewById(R.id.firstNameid);
+            TextView lastName = (TextView)profView.findViewById(R.id.lastNameid);
+            TextView dateOfBirth = (TextView)profView.findViewById(R.id.dateOfBirthid);
+            TextView homeNo = (TextView)profView.findViewById(R.id.houseNumberId);
+            TextView homeSt = (TextView)profView.findViewById(R.id.homeAddressStreetId);
+
+            if (profileModel != null) {
+                firstName.setText(profileModel.getFirstName());
+                lastName.setText(profileModel.getLastName());
+
+                dateOfBirth.setText(generateDateOfBirth().toString());
+                homeNo.setText(profileModel.getHouseNumber());
+                homeSt.setText(profileModel.getStreetName());
+            }
+
+        }
+    }
+    }
+
+
+
+//
+//        }
 /*    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -106,4 +249,4 @@ public class ProfileFragment extends Fragment {
  //       // TODO: Update argument type and name
  //       void onFragmentInteraction(Uri uri);
 //    }
-}
+

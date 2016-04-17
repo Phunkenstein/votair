@@ -8,13 +8,22 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|top">
+        android:layout_gravity="center_horizontal|top"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:textSize="38sp"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="First Name"
+            android:hint="@string/first_name"
             android:ems="10"
             android:id="@+id/firstNameid"
             android:layout_gravity="center_horizontal" />
@@ -23,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Last Name"
+            android:hint="@string/last_name"
             android:ems="10"
             android:id="@+id/lastNameid"
             android:layout_gravity="center_horizontal" />
@@ -35,7 +44,7 @@
             android:ems="10"
             android:id="@+id/dateOfBirthid"
             android:layout_gravity="center_horizontal"
-            android:text="Date of Birth" />
+            android:hint="@string/date_of_birth" />
 
         <EditText
             android:layout_width="match_parent"
@@ -44,19 +53,19 @@
             android:ems="10"
             android:id="@+id/houseNumberId"
             android:layout_gravity="center_horizontal"
-            android:text="Home Address Number" />
+            android:hint="@string/home_address_number" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/homeAddressStreetId"
             android:layout_gravity="center_horizontal"
-            android:text="Home Address Street" />
+            android:hint="@string/home_address_street" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/save"
             android:id="@+id/saveButtonId"
             android:layout_gravity="center_horizontal" />
 

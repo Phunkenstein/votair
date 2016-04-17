@@ -14,7 +14,7 @@ public class ProfileModel {
     Long id;
 
     @Index
-    private String redID;
+    private String regId;
 
     @Index
     private String firstName;
@@ -120,11 +120,11 @@ public class ProfileModel {
         this.numDaysOut = numDaysOut;
     }
 
-    public String getRedID() {
-        return redID;
+    public String getRegId() {
+        return regId;
     }
 
-    public void setRedID(String redID) {
-        this.redID = redID;
+    public void setRegId(String regId) {
+        this.regId = regId;
     }
 }
