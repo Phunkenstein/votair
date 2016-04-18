@@ -68,6 +68,7 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
             SharedPreferences profile = context.getSharedPreferences(PREFS_NAME, 0);
             SharedPreferences.Editor editor = profile.edit();
             editor.putString("registration", regId);
+            editor.commit();
 
         } catch (IOException ex) {
             ex.printStackTrace();

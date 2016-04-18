@@ -79,7 +79,7 @@ public class ServerBase {
 
         // Now find the user's profile via the regId, and update their values.
         ProfileModel profRec = ofy().load().type(ProfileModel.class).filter("regId", profile.getRegId()).first().now();
-        ofy().delete().entity(profRec);
+        if (profRec != null) ofy().delete().entity(profRec);
         ofy().save().entity(profile).now();
 
         resp.setSuccess(true);
