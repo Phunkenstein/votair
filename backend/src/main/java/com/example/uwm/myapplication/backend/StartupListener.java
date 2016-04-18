@@ -20,6 +20,7 @@ public class StartupListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         // startup code here
+        ofy().clear();
 
         //Election 1
         ElectionModel eleModel1 = new ElectionModel();
