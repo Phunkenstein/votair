@@ -174,19 +174,6 @@ public class ProfileFragment extends Fragment {
                 reqService = builder.build();
             }
 
-//            if(reqService == null) {
-//                Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-//                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
-//                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
-//                            @Override
-//                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
-//                                abstractGoogleClientRequest.setDisableGZipContent(true);
-//                            }
-//                        });
-//                builder.setApplicationName("Votair!");
-//                reqService = builder.build();
-
-
             try {
                 String regId = profile.getString("registration", "");
                 ProfileModel localProfileModel = params[0];
