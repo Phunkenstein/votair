@@ -85,20 +85,25 @@ public class ProfileFragment extends Fragment {
 
 
     private Date generateDateOfBirth() {
-        String day = profileModel.getDayOfBirthDD().toString();
-        String month = profileModel.getMonthOfBirthMM().toString();
-        String year = profileModel.getYearOfBirthCCYY().toString();
-
-        String completeDate = year + "." + month + "." + day;
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd");
 
         Date retVal = null;
 
-        try {
-            retVal = dateFormat.parse(completeDate);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (profileModel.getDayOfBirthDD() != null & profileModel.getMonthOfBirthMM() != null & profileModel.getYearOfBirthCCYY() != null) {
+
+
+            String day = profileModel.getDayOfBirthDD().toString();
+            String month = profileModel.getMonthOfBirthMM().toString();
+            String year = profileModel.getYearOfBirthCCYY().toString();
+
+            String completeDate = year + "." + month + "." + day;
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd");
+
+            try {
+                retVal = dateFormat.parse(completeDate);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return retVal;
     }
@@ -129,7 +134,7 @@ public class ProfileFragment extends Fragment {
                 profileModel.setRegId(profile.getString("registration", ""));
                 EditText firstNameText = (EditText)profView.findViewById(R.id.firstNameid);
                 EditText lastNameText = (EditText)profView.findViewById(R.id.lastNameid);
-                EditText dateOfBirthText = (EditText)profView.findViewById(R.id.dateOfBirthid);
+                //EditText dateOfBirthText = (EditText)profView.findViewById(R.id.dateOfBirthid);
                 EditText addressStreet = (EditText)profView.findViewById(R.id.homeAddressStreetId);
                 EditText addressNumber = (EditText)profView.findViewById(R.id.houseNumberId);
 
@@ -178,7 +183,6 @@ public class ProfileFragment extends Fragment {
                 String regId = profile.getString("registration", "");
                 ProfileModel localProfileModel = params[0];
 
-
                 System.out.println("regId" + regId);
                 localProfileModel.setRegId(regId);
                 reqService.updateProfile(localProfileModel).execute();
@@ -224,13 +228,12 @@ public class ProfileFragment extends Fragment {
             catch (IOException e) {
                 System.out.println("Error retrieving profile data from server");
             }
-            return null;
+            return profileModel;
         }
 
         protected void onPostExecute(ProfileModel model) {
-            System.out.println("in post execute");
+            System.out.println("in post for getProfile execute");
             profileModel = model;
-
             TextView firstName= (TextView)profView.findViewById(R.id.firstNameid);
             TextView lastName = (TextView)profView.findViewById(R.id.lastNameid);
             TextView dateOfBirth = (TextView)profView.findViewById(R.id.dateOfBirthid);
@@ -241,7 +244,9 @@ public class ProfileFragment extends Fragment {
                 firstName.setText(profileModel.getFirstName());
                 lastName.setText(profileModel.getLastName());
 
-                dateOfBirth.setText(generateDateOfBirth().toString());
+                Date dob = generateDateOfBirth();
+                if (dob != null)
+                    dateOfBirth.setText(dob.toString());
                 homeNo.setText(profileModel.getHouseNumber());
                 homeSt.setText(profileModel.getStreetName());
             }

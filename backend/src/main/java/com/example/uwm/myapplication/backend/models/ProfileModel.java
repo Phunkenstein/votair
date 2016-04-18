@@ -10,6 +10,17 @@ import com.googlecode.objectify.annotation.Index;
 @Entity
 public class ProfileModel {
 
+    public ProfileModel(){
+        regId = "";
+        firstName = "";
+        lastName = "";
+        numDaysOut = 1;
+        streetName = "";
+        state = "";
+        zipCode = "";
+        city = "";
+    }
+
     @Id
     Long id;
 
@@ -23,7 +34,7 @@ public class ProfileModel {
     @Index
     private int numDaysOut;
 
-    private int houseNumber;
+    private String houseNumber;
     private String streetName;
     private String state;
     private String zipCode;
@@ -48,11 +59,11 @@ public class ProfileModel {
         this.lastName = lastName;
     }
 
-    public int getHouseNumber() {
+    public String getHouseNumber() {
         return houseNumber;
     }
 
-    public void setHouseNumber(int houseNumber) {
+    public void setHouseNumber(String houseNumber) {
         this.houseNumber = houseNumber;
     }
 
