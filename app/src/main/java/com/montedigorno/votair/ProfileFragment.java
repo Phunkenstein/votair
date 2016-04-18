@@ -147,7 +147,7 @@ public class ProfileFragment extends Fragment {
                 profileModel.setFirstName(firstNameString);
                 profileModel.setLastName(lastNameString);
                 try {
-                    profileModel.setHouseNumber(Integer.parseInt(addressNumberString));
+                    profileModel.setHouseNumber(addressNumberString);
                 }
                 catch (NumberFormatException e){
                     System.out.println(e);
