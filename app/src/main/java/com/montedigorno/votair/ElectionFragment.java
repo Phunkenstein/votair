@@ -1,7 +1,9 @@
 package com.montedigorno.votair;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.CalendarContract;
@@ -120,26 +122,37 @@ public class ElectionFragment extends Fragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id){
-                if (childPosition==0){//Date, add to calender
+                int numBallotItems = electionModels.get(groupPosition).getBallotItems().size();
+                //This will likely all need to change when I implement three-layer expandablelistviews...
+                //If I do that at all.  It looks incredibly tricky and cumbersome.  Might replace the 'search'
+                //with a context menu of some kind.  Maybe a popup?
+                if (childPosition == 0) {
                     Intent calIntent = new Intent(Intent.ACTION_INSERT);
                     calIntent.setData(CalendarContract.Events.CONTENT_URI);
                     calIntent.setType("vnd.android.cursor.item/event");
                     calIntent.putExtra(CalendarContract.Events.TITLE, "Vote in " + electionModels.get(groupPosition).getElectionName());
                     calIntent.putExtra(CalendarContract.Events.EVENT_LOCATION, "Voting Place"); //TODO get actual polling location here
                     calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
-                    try{
-                            Date electionDate = new SimpleDateFormat(
-                                    electionModels.get(groupPosition).getElectionDateFormat()).
-                                    parse(electionModels.get(groupPosition).getElectionDate());
+                    try {
+                        Date electionDate = new SimpleDateFormat(
+                                electionModels.get(groupPosition).getElectionDateFormat()).
+                                parse(electionModels.get(groupPosition).getElectionDate());
                         calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, electionDate);
                         calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, electionDate);
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println("Error parsing date string");
                     }
                     startActivity(calIntent);
                 }
-                //TODO Logic to control what to do when a child item is clicked, and to do it.
-                return false;
+                else if (childPosition > numBallotItems){}
+                else {
+                    String searchKey = electionModels.get(groupPosition).
+                            getBallotItems().get(childPosition - 1).split(",")[0];
+                    Intent search = new Intent(Intent.ACTION_WEB_SEARCH);
+                    search.putExtra(SearchManager.QUERY, searchKey);
+                    startActivity(search);
+                }
+                return true;
             }
         });
 
