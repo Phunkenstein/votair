@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,11 +116,13 @@ public class ProfileFragment extends Fragment {
         }
 
         saveButton.setOnClickListener(new View.OnClickListener() {
+                    //("clicked", "clicked");
             public void onClick(View v){
                 if (profileModel == null) {profileModel = new ProfileModel();}
+                Log.w("clicked", "clicked");
                 setProfileModel();
                 SaveProfileTask task = new SaveProfileTask();
-                task.execute();
+                task.execute(profileModel);
             }
 
             private void setProfileModel(){
@@ -151,14 +154,15 @@ public class ProfileFragment extends Fragment {
         return profView;
     }
 
-    public class SaveProfileTask extends AsyncTask<String, Void, Boolean> {
+    public class SaveProfileTask extends AsyncTask<ProfileModel, Void, Boolean> {
         private Request reqService = null;
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected Boolean doInBackground(ProfileModel... params) {
 
             if (reqService == null) {
                 Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+//                Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                         .setRootUrl("http://10.0.2.2:8080/_ah/api/")
                         .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                             @Override
@@ -169,14 +173,32 @@ public class ProfileFragment extends Fragment {
                 builder.setApplicationName("Votair!");
                 reqService = builder.build();
             }
+
+//            if(reqService == null) {
+//                Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+//                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+//                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+//                            @Override
+//                            public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
+//                                abstractGoogleClientRequest.setDisableGZipContent(true);
+//                            }
+//                        });
+//                builder.setApplicationName("Votair!");
+//                reqService = builder.build();
+
+
             try {
-                //profileModel.setHouseNumber((R.id.houseNumberId));
                 String regId = profile.getString("registration", "");
-                profileModel.setRegId(regId);
-                reqService.updateProfile(profileModel);
+                ProfileModel localProfileModel = params[0];
+
+
+                System.out.println("regId" + regId);
+                localProfileModel.setRegId(regId);
+                reqService.updateProfile(localProfileModel).execute();
                 return true;
             } catch (IOException e) {
                 System.out.println("Error retrieving profile data from server");
+                System.out.println(e.toString());
             }
             return null;
         }
@@ -239,48 +261,4 @@ public class ProfileFragment extends Fragment {
 
         }
     }
-    }
-
-
-
-//
-//        }
-/*    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-/*    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-//    public interface OnFragmentInteractionListener {
- //       // TODO: Update argument type and name
- //       void onFragmentInteraction(Uri uri);
-//    }
-
+}
