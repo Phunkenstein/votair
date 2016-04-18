@@ -97,15 +97,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
+
         switch (groupPosition % 3) {
             case 0:
                 lblListHeader.setBackgroundColor(Color.RED);
+                lblListHeader.setTextColor(Color.WHITE);
                 break;
             case 1:
                 lblListHeader.setBackgroundColor(Color.WHITE);
                 break;
             case 2:
                 lblListHeader.setBackgroundColor(Color.BLUE);
+                lblListHeader.setTextColor(Color.WHITE);
                 break;
         }
         return convertView;
