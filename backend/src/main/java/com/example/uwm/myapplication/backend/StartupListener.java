@@ -2,6 +2,7 @@ package com.example.uwm.myapplication.backend;
 
 
 import com.example.uwm.myapplication.backend.models.ElectionModel;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ public class StartupListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         // startup code here
-        ofy().clear();
+        // ofy().clear();
+        List<Key<ElectionModel>> keys = ofy().load().type(ElectionModel.class).keys().list();
+        ofy().delete().keys(keys).now();
 
         //Election 1
         ElectionModel eleModel1 = new ElectionModel();
