@@ -6,6 +6,7 @@
 
 package com.example.uwm.myapplication.backend;
 
+import com.example.uwm.myapplication.backend.models.ProfileModel;
 import com.google.android.gcm.server.Constants;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Result;
@@ -49,8 +50,10 @@ public class MessagingEndpoint {
      * Send to the first 10 devices (You can modify this to send to any number of devices or a specific device)
      *
      * @param message The message to send
+     * @param numDaysOut number of days till the election
      */
-    public void sendMessage(@Named("message") String message) throws IOException {
+    public void sendMessage(@Named("numDaysOut") int numDaysOut, @Named("message") String message) throws IOException {
+        System.out.println("In The Endpoint");
         if(message == null || message.trim().length() == 0) {
             log.warning("Not sending message because it is empty");
             return;
@@ -62,9 +65,10 @@ public class MessagingEndpoint {
         Sender sender = new Sender(API_KEY);
         Message msg = new Message.Builder().addData("message", message).build();
 
-        // Here instead of .limit(10) we will use .filter("numHoursOut", <num hours from today to election time>)
-        List<RegistrationRecord> records = ofy().load().type(RegistrationRecord.class).limit(10).list();
-        for(RegistrationRecord record : records) {
+        // Get all the profiles that should have notifications sent to them.
+        List<ProfileModel> records = ofy().load().type(ProfileModel.class).filter("numDaysOut >=", numDaysOut).list();
+        for(ProfileModel record : records) {
+            // Check if this person should receive a notification
             Result result = sender.send(msg, record.getRegId(), 5);
             if (result.getMessageId() != null) {
                 log.info("Message sent to " + record.getRegId());

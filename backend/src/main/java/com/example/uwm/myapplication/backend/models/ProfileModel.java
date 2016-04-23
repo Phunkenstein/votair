@@ -14,7 +14,8 @@ public class ProfileModel {
         regId = "";
         firstName = "";
         lastName = "";
-        numDaysOut = 1;
+        // For testing purposes an unfilled profile should get every notification.
+        numDaysOut = 999;
         streetName = "";
         state = "";
         zipCode = "";

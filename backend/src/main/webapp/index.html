@@ -78,7 +78,7 @@
           message = '(Empty message)';
         }
 
-        gapi.client.messaging.messagingEndpoint.sendMessage({'message': message}).execute(
+        gapi.client.messaging.messagingEndpoint.sendMessage({'numDaysOut': 1, 'message': message}).execute(
           function(response) {
             var outputAlertDiv = document.getElementById('outputAlert');
             outputAlertDiv.style.visibility = 'visible';

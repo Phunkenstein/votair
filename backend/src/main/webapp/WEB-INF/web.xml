@@ -26,6 +26,15 @@
         <url-pattern>/_ah/spi/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PushNotifications</servlet-name>
+        <servlet-class>com.example.uwm.myapplication.backend.PushNotifications</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PushNotifications</servlet-name>
+        <url-pattern>/push</url-pattern>
+    </servlet-mapping>
+
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
