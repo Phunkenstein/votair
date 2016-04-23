@@ -1,6 +1,6 @@
-package com.montedigorno.votair.models;
+package com.example.uwm.myapplication.backend.models;
 
-import com.google.api.client.util.DateTime;
+import com.google.appengine.repackaged.com.google.api.client.util.DateTime;
 
 /**
  * Created by brianhildebrand on 4/21/16.
@@ -12,14 +12,8 @@ public class InfoModel {
     private String restrictions;
     private String registrationDeadline;
     private String[] otherDeadlines;
-
-    public DateTime getVotingHours() {
-        return votingHours;
-    }
-
-    public void setVotingHours(DateTime votingHours) {
-        this.votingHours = votingHours;
-    }
+    private DateTime votingHoursStart;
+    private DateTime votingHoursEnd;
 
     public String getPollingPlace() {
         return pollingPlace;
@@ -61,7 +55,20 @@ public class InfoModel {
         this.otherDeadlines = otherDeadlines;
     }
 
-    private DateTime votingHours;
 
+    public DateTime getVotingHoursEnd() {
+        return votingHoursEnd;
+    }
 
+    public void setVotingHoursEnd(DateTime votingHoursEnd) {
+        this.votingHoursEnd = votingHoursEnd;
+    }
+
+    public DateTime getVotingHoursStart() {
+        return votingHoursStart;
+    }
+
+    public void setVotingHoursStart(DateTime votingHoursStart) {
+        this.votingHoursStart = votingHoursStart;
+    }
 }
