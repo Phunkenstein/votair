@@ -24,6 +24,11 @@ public class ElectionModel {
     private String electionDate;
     private String electionDateFormat = "MM-dd-yyyy";  //This will be in SimpleDateFormat, IE MM/dd/yyyy
 
+    private String registrationDeadline;
+
+    private String otherDeadlineTitle;
+    private String otherDeadline;
+
     private List<String> ballotItems;
 
     private List<String> info;
@@ -60,5 +65,29 @@ public class ElectionModel {
 
     public void setInfo(List<String> info) {
         this.info = info;
+    }
+
+    public String getRegistrationDeadline() {
+        return registrationDeadline;
+    }
+
+    public void setRegistrationDeadline(String registrationDeadline) {
+        this.registrationDeadline = registrationDeadline;
+    }
+
+    public String getOtherDeadlineTitle() {
+        return otherDeadlineTitle;
+    }
+
+    public void setOtherDeadlineTitle(String otherDeadlineTitle) {
+        this.otherDeadlineTitle = otherDeadlineTitle;
+    }
+
+    public String getOtherDeadline() {
+        return otherDeadline;
+    }
+
+    public void setOtherDeadline(String otherDeadline) {
+        this.otherDeadline = otherDeadline;
     }
 }

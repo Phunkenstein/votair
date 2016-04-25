@@ -10,6 +10,7 @@ import static com.example.uwm.myapplication.backend.OfyService.ofy;
 
 import com.example.uwm.myapplication.backend.models.ElectionModel;
 import com.example.uwm.myapplication.backend.models.ProfileModel;
+import com.example.uwm.myapplication.backend.models.InfoModel;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -28,6 +29,22 @@ import com.google.api.server.spi.config.ApiNamespace;
 )
 
 public class ServerBase {
+
+    @ApiMethod(name = "getVoterInfo")
+    public InfoModel getVoterInfo( @Named( "regId" )String regId ) {
+        ProfileModel prof = ofy().load().type(ProfileModel.class).filter("regId", regId).first().now();
+        // If we could actually find a place to pull the info from. We would use their Profile
+        // (Name, DOB, and Address) to find their polling place, registration status, etc.
+
+        InfoModel infoModel = new InfoModel();
+        infoModel.setPollingPlace("3400 N Maryland Ave, Milwaukee WI, 53211");
+        infoModel.setRequiredDocumentation("State Issued ID");
+        infoModel.setVotingHoursStart("7:00 AM");
+        infoModel.setVotingHoursEnd("8:00 PM");
+        infoModel.setRestrictions("No Jerks");
+
+        return infoModel;
+    }
 
     @ApiMethod(name = "getElectionIds")
     public MyResponse getElectionIds() {
