@@ -32,7 +32,7 @@ public class PushNotifications extends HttpServlet {
                 if( difInDays >= 0 ) {
                     MessagingEndpoint gcm = new MessagingEndpoint();
                     // The endpoint takes care of filtering profiles according to this difInDays
-                    gcm.sendMessage(difInDays, "Election Coming Up: " + record.getElectionName());
+                    gcm.sendMessage(difInDays, "Election Coming Up On" + electionDate.toString() + ": " + record.getElectionName());
                 }
             }
         }
