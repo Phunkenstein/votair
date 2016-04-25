@@ -5,6 +5,12 @@ import com.example.uwm.myapplication.backend.models.ElectionModel;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +35,9 @@ public class StartupListener implements ServletContextListener {
         ElectionModel eleModel1 = new ElectionModel();
         eleModel1.setElectionName("Primaries");
         eleModel1.setElectionDate("02-17-2016");
+        eleModel1.setRegistrationDeadline("01-25-2016");
+        eleModel1.setOtherDeadline("01-30-2016");
+        eleModel1.setOtherDeadlineTitle("Other Deadline");
         List<String> ballotItems1 = new ArrayList<>();
         ballotItems1.add("Democratic,<info about this ballot item>,Bernie,Clint");
         ballotItems1.add("Republican,<info about this ballot item>,Zodiac,Hairpiece");
@@ -43,6 +52,9 @@ public class StartupListener implements ServletContextListener {
         ElectionModel eleModel2 = new ElectionModel();
         eleModel2.setElectionName("Referendum");
         eleModel2.setElectionDate("04-18-2016");
+        eleModel1.setRegistrationDeadline("03-25-2016");
+        eleModel1.setOtherDeadline("03-30-2016");
+        eleModel1.setOtherDeadlineTitle("Other Deadline");
         List<String> ballotItems2 = new ArrayList<>();
         ballotItems2.add("New School,<info about this ballot item>,Yes,No");
         ballotItems2.add("Superintendant,<info about this ballot item>,Julia Harris,Benny Hanna");
@@ -57,6 +69,9 @@ public class StartupListener implements ServletContextListener {
         ElectionModel eleModel3 = new ElectionModel();
         eleModel3.setElectionName("Emergency Vote");
         eleModel3.setElectionDate("07-20-2016");
+        eleModel1.setRegistrationDeadline("06-25-2016");
+        eleModel1.setOtherDeadline("07-19-2016");
+        eleModel1.setOtherDeadlineTitle("Deadline to swear allegiance");
         List<String> ballotItems3 = new ArrayList<>();
         ballotItems3.add("Surrender to Alien Overlords?,<info about this ballot item>,Yes,Yes");
         ballotItems3.add("Secret Handshake,<info about this ballot item>,The Turkey,Patty Cake");
@@ -71,9 +86,6 @@ public class StartupListener implements ServletContextListener {
         ofy().save().entity(eleModel1).now();
         ofy().save().entity(eleModel2).now();
         ofy().save().entity(eleModel3).now();
-
-
-
     }
 
     @Override
