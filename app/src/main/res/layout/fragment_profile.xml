@@ -102,6 +102,70 @@
             android:layout_gravity="center_horizontal"
             android:hint="@string/home_address_street" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="City"
+            android:id="@+id/cityTitleID"
+            android:textColor="#002db3"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="State"
+            android:id="@+id/stateTitleID"
+            android:textColor="#002db3"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Zip Code"
+            android:id="@+id/zipCodeTitleID"
+            android:textColor="#002db3"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="When do you want to be reminded about an election?"
+            android:id="@+id/numDaysReminderTitleID"
+            android:gravity="center_horizontal"
+            android:textColor="#002db3"/>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="1 Day Before the Election"
+            android:id="@+id/daysNumberFieldID"
+            android:layout_gravity="right" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
