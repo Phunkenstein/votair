@@ -1,0 +1,154 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.montedigorno.votair.InfoFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Voter Information"
+            android:id="@+id/voterInfoTitleID"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Polling Location:"
+            android:id="@+id/pollingLocationTitleID"
+            android:layout_below="@+id/voterInfoTitleID"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="3200 N. Cramer St. Milwaukee, WI 53212"
+            android:id="@+id/pollingAddressFieldID"
+            android:layout_below="@+id/pollingLocationTitleID"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/poll_hours"
+            android:id="@+id/pollHoursTitleID"
+            android:layout_below="@+id/pollingAddressFieldID"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="7:00am - 8:00pm"
+            android:id="@+id/pollHoursID"
+            android:layout_below="@+id/pollHoursTitleID"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Required Documentation"
+            android:id="@+id/requiredDocumentationTitleID"
+            android:layout_below="@+id/pollHoursID"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="State Issued Photo ID"
+            android:id="@+id/documentationDataID"
+            android:layout_below="@+id/requiredDocumentationTitleID"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Registration Deadline:"
+            android:id="@+id/registrationDeadlineTitleID"
+            android:layout_below="@+id/documentationDataID"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Voters can register at the polls"
+            android:id="@+id/registrationDeadlineFieldID"
+            android:layout_below="@+id/registrationDeadlineTitleID"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Other Deadlines:"
+            android:id="@+id/otherDeadlinesTitleID"
+            android:layout_below="@+id/registrationDeadlineFieldID"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="No other deadlines at this time"
+            android:id="@+id/otherDeadlinesFieldID"
+            android:layout_below="@+id/otherDeadlinesTitleID"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Voter Restrictions"
+            android:id="@+id/voterRestrictionsTitleID"
+            android:layout_below="@+id/otherDeadlinesFieldID"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/restrictionsFieldID"
+            android:layout_alignEnd="@+id/restrictionsFieldID" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Voters must be at least 18 years old"
+            android:id="@+id/restrictionsFieldID"
+            android:layout_below="@+id/voterRestrictionsTitleID"
+            android:layout_alignRight="@+id/otherDeadlinesFieldID"
+            android:layout_alignEnd="@+id/otherDeadlinesFieldID" />
+
+    </RelativeLayout>
+</FrameLayout>
