@@ -31,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="@string/first_name"
             android:ems="10"
             android:id="@+id/firstNameid"
             android:layout_gravity="center_horizontal"/>
@@ -48,7 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="@string/last_name"
             android:ems="10"
             android:id="@+id/lastNameid"
             android:layout_gravity="center_horizontal" />
@@ -67,8 +65,7 @@
             android:inputType="date"
             android:ems="10"
             android:id="@+id/dateOfBirthid"
-            android:layout_gravity="center_horizontal"
-            android:hint="@string/date_of_birth" />
+            android:layout_gravity="center_horizontal" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -84,8 +81,7 @@
             android:inputType="number"
             android:ems="10"
             android:id="@+id/houseNumberId"
-            android:layout_gravity="center_horizontal"
-            android:hint="@string/home_address_number" />
+            android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -99,8 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/homeAddressStreetId"
-            android:layout_gravity="center_horizontal"
-            android:hint="@string/home_address_street" />
+            android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:layout_width="wrap_content"
