@@ -10,9 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +45,7 @@ import java.util.List;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private SharedPreferences profile;
     private Context context;
@@ -137,6 +141,7 @@ public class ProfileFragment extends Fragment {
                 //EditText dateOfBirthText = (EditText)profView.findViewById(R.id.dateOfBirthid);
                 EditText addressStreet = (EditText)profView.findViewById(R.id.homeAddressStreetId);
                 EditText addressNumber = (EditText)profView.findViewById(R.id.houseNumberId);
+                TextView numDaysReminder = (TextView)profView.findViewById(R.id.daysNumberFieldID);
 
                 String firstNameString = firstNameText.getText().toString();
                 String lastNameString = lastNameText.getText().toString();
@@ -144,6 +149,10 @@ public class ProfileFragment extends Fragment {
                 String addressStreetString = addressStreet.getText().toString();
                 String addressNumberString = addressNumber.getText().toString();
 
+                String daysStatusText = numDaysReminder.getText().toString();
+                int reminderDays = parseDaysFromDayStatusText(daysStatusText);
+
+                profileModel.setNumDaysOut(reminderDays);
                 profileModel.setFirstName(firstNameString);
                 profileModel.setLastName(lastNameString);
                 try {
@@ -156,7 +165,56 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        SeekBar daysBar = (SeekBar)profView.findViewById(R.id.numDaysSeekBarID);
+        daysBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progressChanged = 0;
+
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+                progressChanged = progress;
+                TextView daysText = (TextView)profView.findViewById(R.id.daysNumberFieldID);
+
+                if (progress == 0) daysText.setText("1 Day Before Elections");
+                else daysText.setText(Integer.toString(progress + 1) + " Days Before Election");
+            }
+
+            public void onStartTrackingTouch(SeekBar seekbar){
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+
+
+        });
+
+
+        Spinner spinner = (Spinner) profView.findViewById((R.id.state_spinner));
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
+                R.array.state_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
         return profView;
+    }
+
+    private int parseDaysFromDayStatusText(String daysStatusText) {
+        String[] splitString = daysStatusText.split(" ");
+        return Integer.parseInt(splitString[0]);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     public class SaveProfileTask extends AsyncTask<ProfileModel, Void, Boolean> {

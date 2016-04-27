@@ -121,7 +121,7 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner" />
+            android:id="@+id/state_spinner" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -150,8 +150,9 @@
         <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/seekBar"
-            android:layout_gravity="center_horizontal" />
+            android:id="@+id/numDaysSeekBarID"
+            android:layout_gravity="center_horizontal"
+            android:max="49"/>
 
         <TextView
             android:layout_width="wrap_content"
