@@ -59,17 +59,11 @@
             android:id="@+id/textView3"
             android:textColor="#002db3"/>
 
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.montedigorno.votair.DatePickerFragment"
-            android:id="@+id/fragment"
-            tools:layout="@layout/fragment_date_picker" />
-
-        <EditText
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:ems="10"
             android:id="@+id/dateOfBirthid"
             android:layout_gravity="center_horizontal" />

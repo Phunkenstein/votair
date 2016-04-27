@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     return ElectionFragment.newInstance(getApplicationContext());
                 case 2:
                     //    return VoterInformationFragment.newInstance(getApplicationContext());
-                    return ElectionFragment.newInstance(getApplicationContext()); //so it don't break
+                    return InfoFragment.newInstance(getApplicationContext()); //so it don't break
                 default:
                     return null;
             }
