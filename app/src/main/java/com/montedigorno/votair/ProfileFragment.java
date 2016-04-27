@@ -190,14 +190,20 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         });
 
 
-        Spinner spinner = (Spinner) profView.findViewById((R.id.state_spinner));
+        Spinner stateSpinner = (Spinner) profView.findViewById((R.id.state_spinner));
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
                 R.array.state_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        stateSpinner.setAdapter(adapter);
+
+        Spinner partySpinner = (Spinner)profView.findViewById(R.id.party_spinner);
+        ArrayAdapter<CharSequence> partyAdapter = ArrayAdapter.createFromResource(context,
+                R.array.party_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        partySpinner.setAdapter(partyAdapter);
 
         return profView;
     }

@@ -59,6 +59,13 @@
             android:id="@+id/textView3"
             android:textColor="#002db3"/>
 
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.montedigorno.votair.DatePickerFragment"
+            android:id="@+id/fragment"
+            tools:layout="@layout/fragment_date_picker" />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -142,17 +149,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Political Party"
+            android:id="@+id/partyTitleID" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/party_spinner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="When do you want to be reminded about an election?"
             android:id="@+id/numDaysReminderTitleID"
             android:gravity="center_horizontal"
-            android:textColor="#002db3"/>
+            android:textColor="#002db3"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"/>
 
         <SeekBar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/numDaysSeekBarID"
             android:layout_gravity="center_horizontal"
-            android:max="49"/>
+            android:max="49"
+            android:layout_marginBottom="15dp"/>
 
         <TextView
             android:layout_width="wrap_content"

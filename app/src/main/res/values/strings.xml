@@ -14,4 +14,12 @@
     <string-array name="state_array">
         <item>Wisconsin</item>
     </string-array>
+    <string-array name="party_array">
+        <item>Democrat</item>
+        <item>Republican</item>
+        <item>Libertarian</item>
+        <item>Green</item>
+        <item>Socialist</item>
+        <item>Pirate</item>
+    </string-array>
 </resources>
