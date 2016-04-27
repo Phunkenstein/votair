@@ -19,23 +19,52 @@
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal" />
 
-        <EditText
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="@string/first_name"
-            android:ems="10"
-            android:id="@+id/firstNameid"
-            android:layout_gravity="center_horizontal" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="First Name"
+            android:id="@+id/firstNameTitleID"
+            android:textColor="#002db3"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="@string/last_name"
+            android:ems="10"
+            android:id="@+id/firstNameid"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="LastName"
+            android:id="@+id/textView2"
+            android:textColor="#002db3"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/lastNameid"
             android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Date of Birth"
+            android:id="@+id/textView3"
+            android:textColor="#002db3"/>
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.montedigorno.votair.DatePickerFragment"
+            android:id="@+id/fragment"
+            tools:layout="@layout/fragment_date_picker" />
 
         <EditText
             android:layout_width="match_parent"
@@ -43,8 +72,15 @@
             android:inputType="date"
             android:ems="10"
             android:id="@+id/dateOfBirthid"
-            android:layout_gravity="center_horizontal"
-            android:hint="@string/date_of_birth" />
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Home Address Number"
+            android:id="@+id/textView4"
+            android:textColor="#002db3"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -52,22 +88,109 @@
             android:inputType="number"
             android:ems="10"
             android:id="@+id/houseNumberId"
-            android:layout_gravity="center_horizontal"
-            android:hint="@string/home_address_number" />
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Home Address Street"
+            android:id="@+id/textView5"
+            android:textColor="#002db3"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/homeAddressStreetId"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="City"
+            android:id="@+id/cityTitleID"
+            android:textColor="#002db3"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="State"
+            android:id="@+id/stateTitleID"
+            android:textColor="#002db3"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/state_spinner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Zip Code"
+            android:id="@+id/zipCodeTitleID"
+            android:textColor="#002db3"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Political Party"
+            android:id="@+id/partyTitleID" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/party_spinner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="When do you want to be reminded about an election?"
+            android:id="@+id/numDaysReminderTitleID"
+            android:gravity="center_horizontal"
+            android:textColor="#002db3"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"/>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/numDaysSeekBarID"
             android:layout_gravity="center_horizontal"
-            android:hint="@string/home_address_street" />
+            android:max="49"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="1 Day Before the Election"
+            android:id="@+id/daysNumberFieldID"
+            android:layout_gravity="right" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save"
             android:id="@+id/saveButtonId"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="#002db3"/>
 
     </LinearLayout>
 

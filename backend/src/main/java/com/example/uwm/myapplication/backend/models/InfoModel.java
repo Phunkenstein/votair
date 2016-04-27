@@ -1,7 +1,5 @@
 package com.example.uwm.myapplication.backend.models;
 
-import com.google.appengine.repackaged.com.google.api.client.util.DateTime;
-
 /**
  * Created by brianhildebrand on 4/21/16.
  */
@@ -10,10 +8,8 @@ public class InfoModel {
     private String pollingPlace;
     private String requiredDocumentation;
     private String restrictions;
-    private String registrationDeadline;
-    private String[] otherDeadlines;
-    private DateTime votingHoursStart;
-    private DateTime votingHoursEnd;
+    private String votingHoursStart;
+    private String votingHoursEnd;
 
     public String getPollingPlace() {
         return pollingPlace;
@@ -39,36 +35,20 @@ public class InfoModel {
         this.restrictions = restrictions;
     }
 
-    public String getRegistrationDeadline() {
-        return registrationDeadline;
-    }
 
-    public void setRegistrationDeadline(String registrationDeadline) {
-        this.registrationDeadline = registrationDeadline;
-    }
-
-    public String[] getOtherDeadlines() {
-        return otherDeadlines;
-    }
-
-    public void setOtherDeadlines(String[] otherDeadlines) {
-        this.otherDeadlines = otherDeadlines;
-    }
-
-
-    public DateTime getVotingHoursEnd() {
+    public String getVotingHoursEnd() {
         return votingHoursEnd;
     }
 
-    public void setVotingHoursEnd(DateTime votingHoursEnd) {
+    public void setVotingHoursEnd(String votingHoursEnd) {
         this.votingHoursEnd = votingHoursEnd;
     }
 
-    public DateTime getVotingHoursStart() {
+    public String getVotingHoursStart() {
         return votingHoursStart;
     }
 
-    public void setVotingHoursStart(DateTime votingHoursStart) {
+    public void setVotingHoursStart(String votingHoursStart) {
         this.votingHoursStart = votingHoursStart;
     }
 }

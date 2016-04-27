@@ -10,4 +10,16 @@
     <string name="save">Save</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="poll_hours">Poll Hours</string>
+    <string-array name="state_array">
+        <item>Wisconsin</item>
+    </string-array>
+    <string-array name="party_array">
+        <item>Democrat</item>
+        <item>Republican</item>
+        <item>Libertarian</item>
+        <item>Green</item>
+        <item>Socialist</item>
+        <item>Pirate</item>
+    </string-array>
 </resources>
