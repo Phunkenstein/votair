@@ -225,11 +225,6 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 
     }
 
-    public void showDatePickerDialog(View v) {
-        DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-    }
-
     public class SaveProfileTask extends AsyncTask<ProfileModel, Void, Boolean> {
         private Request reqService = null;
 
@@ -307,7 +302,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
             profileModel = model;
             TextView firstName= (TextView)profView.findViewById(R.id.firstNameid);
             TextView lastName = (TextView)profView.findViewById(R.id.lastNameid);
-            TextView dateOfBirth = (TextView)profView.findViewById(R.id.dobID);
+            TextView dateOfBirth = (TextView)profView.findViewById(R.id.dateOfBirthid);
             TextView homeNo = (TextView)profView.findViewById(R.id.houseNumberId);
             TextView homeSt = (TextView)profView.findViewById(R.id.homeAddressStreetId);
 
