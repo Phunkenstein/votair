@@ -59,6 +59,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText);
+
+        if( childPosition == 0 ) {
+            txtListChild.setTypeface(null, Typeface.BOLD);
+        } else if (isLastChild) {
+            txtListChild.setTypeface(null, Typeface.ITALIC);
+        } else {
+            txtListChild.setTypeface(null, Typeface.NORMAL);
+        }
+
         return convertView;
     }
 
@@ -105,6 +114,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 break;
             case 1:
                 lblListHeader.setBackgroundColor(Color.WHITE);
+                lblListHeader.setTextColor(Color.BLUE);
                 break;
             case 2:
                 lblListHeader.setBackgroundColor(Color.BLUE);

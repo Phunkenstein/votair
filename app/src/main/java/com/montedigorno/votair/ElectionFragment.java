@@ -184,36 +184,12 @@ public class ElectionFragment extends Fragment {
         return rootView;
     }
 
-
-
     private void populateDummyList(){
-        elections = new ArrayList<String>();
-        electionItemHash = new HashMap<String, List<String>>();
-
-        elections.add("Primaries");
-        elections.add("General Election");
-        elections.add("dummy Election");
-
-        List<String> primaries = new ArrayList<String>();
-        primaries.add("Republican");
-        primaries.add("Democrat");
-        primaries.add("Date to vote\n04-05-2016");
-        primaries.add("more stuff you need to know");
-
-        List<String> general = new ArrayList<String>();
-        general.add("Republican");
-        general.add("Democrat");
-        general.add("Date to vote\n11-03-2016");
-        general.add("vote already guies");
-
-        List<String> dummy = new ArrayList<String>();
-        dummy.add("Dummy item");
-        dummy.add("Another dummy item");
-
+        elections = new ArrayList<>();
+        electionItemHash = new HashMap<>();
+        elections.add("Loading...");
+        List<String> primaries = new ArrayList<>();
         electionItemHash.put(elections.get(0), primaries);
-        electionItemHash.put(elections.get(1), general);
-        electionItemHash.put(elections.get(2), dummy);
-        System.out.println("populating dummy list complete");
     }
 
     private void populateList(){
@@ -252,8 +228,6 @@ public class ElectionFragment extends Fragment {
         System.out.println("populating list complete");
     }
 
-
-
     public class FetchElectionTask extends AsyncTask<String, Void, String[]> {
         private Request reqService = null;
         @Override
@@ -273,16 +247,56 @@ public class ElectionFragment extends Fragment {
             }
 
             try {
+                // Get election IDS
                 List<Long> electionIds = reqService.getElectionIds().execute().getMyData();
+
+                // Get each election one at a time and insert it into sorted order.
                 for (Long id : electionIds ) {
-                    electionModels.add(reqService.getElection(id).execute());
+                    ElectionModel eleModel = reqService.getElection(id).execute();
+                    // Just add to the list if it is empty.
+                    if( electionModels.size() == 0 ) {
+                        electionModels.add(eleModel);
+                    } else {
+                        // Otherwise go through the list and place ourselves int the correct spot.
+                        long electionDate = 0;
+                        try {
+                            electionDate = new SimpleDateFormat(eleModel.getElectionDateFormat()).parse(eleModel.getElectionDate()).getTime();
+                        } catch (Exception r) {}
+
+                        // Using a temp list to build the new list.
+                        ArrayList<ElectionModel> newElectionModels = new ArrayList();
+
+                        // So we don't add ourselves twice.
+                        Boolean wasAdded = false;
+
+                        // Go through the list.
+                        for (int i = 0; i < electionModels.size(); i++) {
+                            ElectionModel otherEleModel = electionModels.get(i);
+                            long otherElectionDate = 0;
+                            try {
+                                otherElectionDate = new SimpleDateFormat(otherEleModel.getElectionDateFormat()).parse(otherEleModel.getElectionDate()).getTime();
+                            } catch (Exception r) {}
+
+                            // Place ourselves in the new list before the other election.
+                            if (electionDate < otherElectionDate && !wasAdded) {
+                                newElectionModels.add(eleModel);
+                                wasAdded = true;
+                            }
+                            newElectionModels.add(otherEleModel);
+                        }
+
+                        // If we were not added, we go at the end.
+                        if(!wasAdded) newElectionModels.add(eleModel);
+
+                        // Replace the old model with the new one.
+                        electionModels = newElectionModels;
+                    }
                 }
             } catch (IOException e) {
                 System.out.println("Error Getting Data From Server");
             }
 
             return null;
-
         }
 
         protected void onPostExecute(String[] strings) {
@@ -291,6 +305,5 @@ public class ElectionFragment extends Fragment {
             populateList();
             mElectionAdapter.notifyDataSetChanged();
         }
-
     }
 }

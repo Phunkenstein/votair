@@ -33,52 +33,49 @@ public class StartupListener implements ServletContextListener {
 
         //Election 1
         ElectionModel eleModel1 = new ElectionModel();
-        eleModel1.setElectionName("Primaries");
-        eleModel1.setElectionDate("02-17-2016");
-        eleModel1.setRegistrationDeadline("01-25-2016");
-        eleModel1.setOtherDeadline("01-30-2016");
-        eleModel1.setOtherDeadlineTitle("Other Deadline");
+        eleModel1.setElectionName("Presidential");
+        eleModel1.setElectionDate("11-08-2016");
+        eleModel1.setRegistrationDeadline("10-08-2016");
+        eleModel1.setOtherDeadline("11-00-2016");
+        eleModel1.setOtherDeadlineTitle("Deadline to Register With a Party");
         List<String> ballotItems1 = new ArrayList<>();
-        ballotItems1.add("Democratic,<info about this ballot item>,Bernie,Clint");
-        ballotItems1.add("Republican,<info about this ballot item>,Zodiac,Hairpiece");
+        ballotItems1.add("Presidential,<info about this ballot item>,Bernie,Hairpeice,Green");
+        ballotItems1.add("Tax Referendum,<info about this ballot item>,Yes,No");
         ballotItems1.add("Other,<info about this ballot item>,Judge,Different Judge");
         List<String> info1 = new ArrayList<>();
-        info1.add("www.google.com");
-        info1.add("<information about this election>");
+        info1.add("In this well publicized contest The Grassroots Democrat goes up against The Don");
         eleModel1.setInfo(info1);
         eleModel1.setBallotItems(ballotItems1);
 
         // Election 2
         ElectionModel eleModel2 = new ElectionModel();
-        eleModel2.setElectionName("Referendum");
-        eleModel2.setElectionDate("04-18-2016");
-        eleModel1.setRegistrationDeadline("03-25-2016");
-        eleModel1.setOtherDeadline("03-30-2016");
+        eleModel2.setElectionName("Local Election");
+        eleModel2.setElectionDate("09-18-2016");
+        eleModel1.setRegistrationDeadline("08-25-2016");
+        eleModel1.setOtherDeadline("08-30-2016");
         eleModel1.setOtherDeadlineTitle("Other Deadline");
         List<String> ballotItems2 = new ArrayList<>();
         ballotItems2.add("New School,<info about this ballot item>,Yes,No");
-        ballotItems2.add("Superintendant,<info about this ballot item>,Julia Harris,Benny Hanna");
+        ballotItems2.add("Superintendent,<info about this ballot item>,Julia Harris,Benny Hanna");
         ballotItems2.add("Other,<info about this ballot item>,Judge,Different Judge");
         List<String> info2 = new ArrayList<>();
-        info2.add("www.google.com");
-        info2.add("<information about this election>");
+        info2.add("An important local election to decide on a new School and Superintendent.");
         eleModel2.setInfo(info2);
         eleModel2.setBallotItems(ballotItems2);
 
         // Election 3
         ElectionModel eleModel3 = new ElectionModel();
         eleModel3.setElectionName("Emergency Vote");
-        eleModel3.setElectionDate("07-20-2016");
-        eleModel1.setRegistrationDeadline("06-25-2016");
-        eleModel1.setOtherDeadline("07-19-2016");
-        eleModel1.setOtherDeadlineTitle("Deadline to swear allegiance");
+        eleModel3.setElectionDate("06-01-2016");
+        eleModel1.setRegistrationDeadline("05-25-2016");
+        eleModel1.setOtherDeadline("05-19-2016");
+        eleModel1.setOtherDeadlineTitle("Deadline to Swear Allegiance");
         List<String> ballotItems3 = new ArrayList<>();
         ballotItems3.add("Surrender to Alien Overlords?,<info about this ballot item>,Yes,Yes");
         ballotItems3.add("Secret Handshake,<info about this ballot item>,The Turkey,Patty Cake");
         ballotItems3.add("Other,<info about this ballot item>,Alien Judge,Different Alien Judge");
         List<String> info3 = new ArrayList<>();
-        info3.add("www.google.com");
-        info3.add("<information about this election>");
+        info3.add("Our Gracious Alien Overlords have seen fit to offer us this democratic Election.");
         eleModel3.setInfo(info3);
         eleModel3.setBallotItems(ballotItems3);
 
