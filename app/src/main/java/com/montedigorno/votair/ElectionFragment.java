@@ -1,7 +1,9 @@
 package com.montedigorno.votair;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -144,13 +146,36 @@ public class ElectionFragment extends Fragment {
                     }
                     startActivity(calIntent);
                 }
-                else if (childPosition > numBallotItems){}
-                else {
-                    String searchKey = electionModels.get(groupPosition).
-                            getBallotItems().get(childPosition - 1).split(",")[0];
-                    Intent search = new Intent(Intent.ACTION_WEB_SEARCH);
-                    search.putExtra(SearchManager.QUERY, searchKey);
-                    startActivity(search);
+                else if (childPosition > numBallotItems){}  //Infostrings here, maybe.
+                else { //Ballot item
+                    final String[] items = electionModels.get(groupPosition).getBallotItems().
+                            get(childPosition - 1).split(",");
+                    String selectedItem = items[0];
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Select an item for more information")
+                            .setItems(items, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String searchKey = items[which];
+                                    Intent search = new Intent(Intent.ACTION_WEB_SEARCH);
+                                    search.putExtra(SearchManager.QUERY, searchKey);
+                                    startActivity(search);
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                    // User cancelled the dialog
+                                }
+                            });
+                    ;
+//                    String searchKey = electionModels.get(groupPosition).
+//                            getBallotItems().get(childPosition - 1).spli  t(",")[0];
+//                    Intent search = new Intent(Intent.ACTION_WEB_SEARCH);
+//                    search.putExtra(SearchManager.QUERY, searchKey);
+//                    startActivity(search);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
                 return true;
             }

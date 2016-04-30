@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 
 /**
- * Created by Fatch on 3/28/2016.
+ * Created by Jonathan Nieznanski on 3/28/2016.
  */
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
