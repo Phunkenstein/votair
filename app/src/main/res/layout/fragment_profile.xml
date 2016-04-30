@@ -2,14 +2,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".ProfileFragment"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/windowBackground">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|top"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:textColor="@color/textColor">
 
         <TextView
             android:layout_width="wrap_content"
@@ -17,7 +23,8 @@
             android:text="Profile"
             android:textSize="38sp"
             android:id="@+id/textView"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/textColor"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,7 +32,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="First Name"
             android:id="@+id/firstNameTitleID"
-            android:textColor="#002db3"/>
+            android:textColor="@color/textColorPrimary"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -33,7 +40,8 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/firstNameid"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/textColor"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,7 +49,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="LastName"
             android:id="@+id/textView2"
-            android:textColor="#002db3"/>
+            android:textColor="@color/textColorPrimary"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -49,7 +57,8 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/lastNameid"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/textColor"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -57,7 +66,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Date of Birth"
             android:id="@+id/textView3"
-            android:textColor="#002db3"/>
+            android:textColor="@color/textColorPrimary"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -66,7 +75,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:ems="10"
             android:id="@+id/dateOfBirthid"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/textColor"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -74,7 +84,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Home Address Number"
             android:id="@+id/textView4"
-            android:textColor="#002db3"/>
+            android:textColor="@color/textColorPrimary"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -82,7 +92,8 @@
             android:inputType="number"
             android:ems="10"
             android:id="@+id/houseNumberId"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/textColor"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -90,13 +101,14 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Home Address Street"
             android:id="@+id/textView5"
-            android:textColor="#002db3"/>
+            android:textColor="@color/textColorPrimary"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/homeAddressStreetId"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/textColor"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,12 +116,13 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="City"
             android:id="@+id/cityTitleID"
-            android:textColor="#002db3"/>
+            android:textColor="@color/textColorPrimary"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText2" />
+            android:id="@+id/editText2"
+            android:textColor="@color/textColor" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -117,12 +130,13 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="State"
             android:id="@+id/stateTitleID"
-            android:textColor="#002db3"/>
+            android:textColor="@color/textColorPrimary"/>
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/state_spinner" />
+            android:id="@+id/state_spinner"
+            android:textColor="@color/textColor" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -130,26 +144,29 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Zip Code"
             android:id="@+id/zipCodeTitleID"
-            android:textColor="#002db3"/>
+            android:textColor="@color/textColorPrimary"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
-            android:id="@+id/editText" />
+            android:id="@+id/editText"
+            android:textColor="@color/textColor" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Political Party"
+            android:textColor="@color/textColorPrimary"
             android:id="@+id/partyTitleID" />
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/party_spinner" />
+            android:id="@+id/party_spinner"
+            android:textColor="@color/textColor" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -158,7 +175,7 @@
             android:text="When do you want to be reminded about an election?"
             android:id="@+id/numDaysReminderTitleID"
             android:gravity="center_horizontal"
-            android:textColor="#002db3"
+            android:textColor="@color/textColorPrimary"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="10dp"/>
 
@@ -176,7 +193,8 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="1 Day Before the Election"
             android:id="@+id/daysNumberFieldID"
-            android:layout_gravity="right" />
+            android:layout_gravity="right"
+            android:textColor="@color/textColor"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -184,7 +202,7 @@
             android:text="@string/save"
             android:id="@+id/saveButtonId"
             android:layout_gravity="center_horizontal"
-            android:textColor="#002db3"/>
+            android:textColor="@color/textColorPrimary"/>
 
     </LinearLayout>
 
