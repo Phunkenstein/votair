@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.lblListItem);
 
         txtListChild.setText(childText);
+        txtListChild.setTextColor(_context.getResources().getColor(R.color.textColor, null));
 
         if( childPosition == 0 ) {
             txtListChild.setTypeface(null, Typeface.BOLD);
@@ -105,22 +107,23 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
+        lblListHeader.setTextColor(_context.getResources().getColor(R.color.textColorPrimary,null));
         lblListHeader.setText(headerTitle);
 
-        switch (groupPosition % 3) {
-            case 0:
-                lblListHeader.setBackgroundColor(Color.RED);
-                lblListHeader.setTextColor(Color.WHITE);
-                break;
-            case 1:
-                lblListHeader.setBackgroundColor(Color.WHITE);
-                lblListHeader.setTextColor(Color.BLUE);
-                break;
-            case 2:
-                lblListHeader.setBackgroundColor(Color.BLUE);
-                lblListHeader.setTextColor(Color.WHITE);
-                break;
-        }
+//        switch (groupPosition % 3) {
+//            case 0:
+//                lblListHeader.setBackgroundColor(Color.RED);
+//                lblListHeader.setTextColor(Color.WHITE);
+//                break;
+//            case 1:
+//                lblListHeader.setBackgroundColor(Color.WHITE);
+//                lblListHeader.setTextColor(Color.BLUE);
+//                break;
+//            case 2:
+//                lblListHeader.setBackgroundColor(Color.BLUE);
+//                lblListHeader.setTextColor(Color.WHITE);
+//                break;
+//        }
         return convertView;
     }
 
