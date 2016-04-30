@@ -2,40 +2,19 @@ package com.montedigorno.votair;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
 
-
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DatePickerFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DatePickerFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Created by brianhildebrand on 4/30/16.
  */
-public class DatePickerFragment extends DialogFragment
-        implements DatePickerDialog.OnDateSetListener {
+public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View datePickerView = inflater.inflate(R.layout.fragment_date_picker, container, false);
-        return datePickerView;
-    }
-
-        @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public DatePickerDialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -49,4 +28,5 @@ public class DatePickerFragment extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
     }
+
 }

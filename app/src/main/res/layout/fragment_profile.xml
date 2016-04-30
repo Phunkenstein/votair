@@ -60,13 +60,12 @@
             android:textColor="#002db3"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="date"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:ems="10"
-            android:id="@+id/dateOfBirthid"
-            android:layout_gravity="center_horizontal" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/dobID"
+            android:text="Select your Date of Birth"
+            android:onClick="showDatePickerDialog"/>
 
         <TextView
             android:layout_width="wrap_content"
