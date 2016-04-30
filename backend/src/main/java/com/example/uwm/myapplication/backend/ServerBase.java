@@ -31,17 +31,17 @@ import com.google.api.server.spi.config.ApiNamespace;
 public class ServerBase {
 
     @ApiMethod(name = "getVoterInfo")
-    public InfoModel getVoterInfo( @Named( "regId" )String regId ) {
-        ProfileModel prof = ofy().load().type(ProfileModel.class).filter("regId", regId).first().now();
+    public InfoModel getVoterInfo() {
+        // ProfileModel prof = ofy().load().type(ProfileModel.class).filter("regId", regId).first().now();
         // If we could actually find a place to pull the info from. We would use their Profile
         // (Name, DOB, and Address) to find their polling place, registration status, etc.
 
         InfoModel infoModel = new InfoModel();
-        infoModel.setPollingPlace("3400 N Maryland Ave, Milwaukee WI, 53211");
-        infoModel.setRequiredDocumentation("State Issued ID");
-        infoModel.setVotingHoursStart("7:00 AM");
-        infoModel.setVotingHoursEnd("8:00 PM");
-        infoModel.setRestrictions("No Jerks");
+        infoModel.setPollingPlace("3200 N. Cramer St. Milwaukee WI, 53212");
+        infoModel.setRequiredDocumentation("State Issued Photo ID");
+        infoModel.setVotingHoursStart("7:00am");
+        infoModel.setVotingHoursEnd("8:00pm");
+        infoModel.setRestrictions("Voters must be at least 18 years old");
 
         return infoModel;
     }

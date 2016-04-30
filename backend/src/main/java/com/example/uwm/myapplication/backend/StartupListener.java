@@ -51,9 +51,9 @@ public class StartupListener implements ServletContextListener {
         ElectionModel eleModel2 = new ElectionModel();
         eleModel2.setElectionName("Local Election");
         eleModel2.setElectionDate("09-18-2016");
-        eleModel1.setRegistrationDeadline("08-25-2016");
-        eleModel1.setOtherDeadline("08-30-2016");
-        eleModel1.setOtherDeadlineTitle("Other Deadline");
+        eleModel2.setRegistrationDeadline("08-25-2016");
+        eleModel2.setOtherDeadline("08-30-2016");
+        eleModel2.setOtherDeadlineTitle("Other Deadline");
         List<String> ballotItems2 = new ArrayList<>();
         ballotItems2.add("New School,Yes,No");
         ballotItems2.add("Superintendent,Julia Harris,Benny Hanna");
@@ -67,9 +67,9 @@ public class StartupListener implements ServletContextListener {
         ElectionModel eleModel3 = new ElectionModel();
         eleModel3.setElectionName("Emergency Vote");
         eleModel3.setElectionDate("06-01-2016");
-        eleModel1.setRegistrationDeadline("05-25-2016");
-        eleModel1.setOtherDeadline("05-19-2016");
-        eleModel1.setOtherDeadlineTitle("Deadline to Swear Allegiance");
+        eleModel3.setRegistrationDeadline("05-25-2016");
+        eleModel3.setOtherDeadline("05-19-2016");
+        eleModel3.setOtherDeadlineTitle("Deadline to Swear Allegiance");
         List<String> ballotItems3 = new ArrayList<>();
         ballotItems3.add("Surrender to Alien Overlords?,Yes,Yes");
         ballotItems3.add("Secret Handshake,The Turkey,Patty Cake");

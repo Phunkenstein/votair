@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -57,6 +58,8 @@ public class ElectionFragment extends Fragment {
     private ExpandableListView expView;
     private ExpandableListAdapter mElectionAdapter;
     private ArrayList<ElectionModel> electionModels;
+    private SharedPreferences profile;
+    public static final String PREFS_NAME = "ProfilePrefs";
 
 
     public ElectionFragment() {
@@ -65,6 +68,8 @@ public class ElectionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        context = this.getActivity();
+        profile = context.getSharedPreferences(PREFS_NAME, 0);
 
         electionModels = new ArrayList<>();
 
@@ -309,6 +314,12 @@ public class ElectionFragment extends Fragment {
         }
 
         protected void onPostExecute(String[] strings) {
+            SharedPreferences.Editor editor = profile.edit();
+            editor.putString("regdeadline", electionModels.get(0).getRegistrationDeadline());
+            editor.putString("otherdeadlinetitle", electionModels.get(0).getOtherDeadlineTitle());
+            editor.putString("otherdeadline", electionModels.get(0).getOtherDeadline());
+            editor.commit();
+
             System.out.println("in post execute");
             System.out.println(electionItemHash);
             populateList();
