@@ -120,6 +120,7 @@ public class ElectionFragment extends Fragment {
 //        }
         ;
         expView.setAdapter(mElectionAdapter);
+        expView.expandGroup(0); // set top item expanded by default
         expView.setOnChildClickListener(new OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
