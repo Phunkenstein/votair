@@ -39,9 +39,9 @@ public class StartupListener implements ServletContextListener {
         eleModel1.setOtherDeadline("11-00-2016");
         eleModel1.setOtherDeadlineTitle("Deadline to Register With a Party");
         List<String> ballotItems1 = new ArrayList<>();
-        ballotItems1.add("Presidential,<info about this ballot item>,Bernie,Hairpeice,Green");
-        ballotItems1.add("Tax Referendum,<info about this ballot item>,Yes,No");
-        ballotItems1.add("Other,<info about this ballot item>,Judge,Different Judge");
+        ballotItems1.add("Presidential,Bernie,Hairpeice,Green");
+        ballotItems1.add("Tax Referendum,Yes,No");
+        ballotItems1.add("Other,Judge,Different Judge");
         List<String> info1 = new ArrayList<>();
         info1.add("In this well publicized contest The Grassroots Democrat goes up against The Don");
         eleModel1.setInfo(info1);
@@ -55,9 +55,9 @@ public class StartupListener implements ServletContextListener {
         eleModel1.setOtherDeadline("08-30-2016");
         eleModel1.setOtherDeadlineTitle("Other Deadline");
         List<String> ballotItems2 = new ArrayList<>();
-        ballotItems2.add("New School,<info about this ballot item>,Yes,No");
-        ballotItems2.add("Superintendent,<info about this ballot item>,Julia Harris,Benny Hanna");
-        ballotItems2.add("Other,<info about this ballot item>,Judge,Different Judge");
+        ballotItems2.add("New School,Yes,No");
+        ballotItems2.add("Superintendent,Julia Harris,Benny Hanna");
+        ballotItems2.add("Other,Judge,Different Judge");
         List<String> info2 = new ArrayList<>();
         info2.add("An important local election to decide on a new School and Superintendent.");
         eleModel2.setInfo(info2);
@@ -71,9 +71,9 @@ public class StartupListener implements ServletContextListener {
         eleModel1.setOtherDeadline("05-19-2016");
         eleModel1.setOtherDeadlineTitle("Deadline to Swear Allegiance");
         List<String> ballotItems3 = new ArrayList<>();
-        ballotItems3.add("Surrender to Alien Overlords?,<info about this ballot item>,Yes,Yes");
-        ballotItems3.add("Secret Handshake,<info about this ballot item>,The Turkey,Patty Cake");
-        ballotItems3.add("Other,<info about this ballot item>,Alien Judge,Different Alien Judge");
+        ballotItems3.add("Surrender to Alien Overlords?,Yes,Yes");
+        ballotItems3.add("Secret Handshake,The Turkey,Patty Cake");
+        ballotItems3.add("Other,Alien Judge,Different Alien Judge");
         List<String> info3 = new ArrayList<>();
         info3.add("Our Gracious Alien Overlords have seen fit to offer us this democratic Election.");
         eleModel3.setInfo(info3);

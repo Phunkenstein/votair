@@ -151,13 +151,21 @@ public class ElectionFragment extends Fragment {
                 else { //Ballot item
                     final String[] items = electionModels.get(groupPosition).getBallotItems().
                             get(childPosition - 1).split(",");
+
+                    // Append some titles to these fields.
                     String selectedItem = items[0];
+                    items[0] = "Ballot Item: " + selectedItem;
+                    for( int i = 1; i < items.length; i++ ) {
+                        items[i] = "Choice " + i + ": " + items[i];
+                    }
+
+                    // Create the dialog
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Select an item for more information")
                             .setItems(items, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    String searchKey = items[which];
+                                    String searchKey = items[which].split(": ")[1];
                                     Intent search = new Intent(Intent.ACTION_WEB_SEARCH);
                                     search.putExtra(SearchManager.QUERY, searchKey);
                                     startActivity(search);
