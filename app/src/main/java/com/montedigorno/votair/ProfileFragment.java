@@ -1,11 +1,8 @@
 package com.montedigorno.votair;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,14 +29,9 @@ import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
-//import com.montedigorno.votair.models.ProfileModel;
+import java.util.Calendar;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,7 +41,7 @@ import java.util.List;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
+public class ProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private SharedPreferences profile;
     private Context context;
@@ -63,7 +54,6 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     public static TextView dayOfBirthView;
 
     public ProfileFragment() {
-        // Required empty public constructor
     }
 
     public static ProfileFragment newInstance(Context context) {
@@ -87,34 +77,9 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
 
     }
 
-    private Date generateDateOfBirth() {
-
-        Date retVal = null;
-
-        if (profileModel.getDayOfBirthDD() != null & profileModel.getMonthOfBirthMM() != null & profileModel.getYearOfBirthCCYY() != null) {
-
-
-            String day = profileModel.getDayOfBirthDD().toString();
-            String month = profileModel.getMonthOfBirthMM().toString();
-            String year = profileModel.getYearOfBirthCCYY().toString();
-
-            String completeDate = year + "." + month + "." + day;
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd");
-
-            try {
-                retVal = dateFormat.parse(completeDate);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return retVal;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         profView = inflater.inflate(R.layout.fragment_profile, container, false);
 
         Button saveButton = (Button) profView.findViewById(R.id.saveButtonId);
@@ -124,7 +89,6 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         }
 
         saveButton.setOnClickListener(new View.OnClickListener() {
-                    //("clicked", "clicked");
             public void onClick(View v){
                 if (profileModel == null) {profileModel = new ProfileModel();}
                 Log.w("clicked", "clicked");
@@ -137,23 +101,36 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
                 profileModel.setRegId(profile.getString("registration", ""));
                 EditText firstNameText = (EditText)profView.findViewById(R.id.firstNameid);
                 EditText lastNameText = (EditText)profView.findViewById(R.id.lastNameid);
-                //EditText dateOfBirthText = (EditText)profView.findViewById(R.id.dateOfBirthid);
+                TextView dateOfBirthText = (TextView)profView.findViewById(R.id.dateOfBirthid);
                 EditText addressStreet = (EditText)profView.findViewById(R.id.homeAddressStreetId);
                 EditText addressNumber = (EditText)profView.findViewById(R.id.houseNumberId);
                 TextView numDaysReminder = (TextView)profView.findViewById(R.id.daysNumberFieldID);
+                EditText cityEdit = (EditText)profView.findViewById(R.id.cityEditID);
+                EditText zipText = (EditText)profView.findViewById(R.id.zipEditID);
 
+                String zipString = zipText.getText().toString();
                 String firstNameString = firstNameText.getText().toString();
                 String lastNameString = lastNameText.getText().toString();
-                //DateTime dateOfBirthDate = dateOfBirthText.getText().toString().
+                String dateOfBirthDate = dateOfBirthText.getText().toString();
                 String addressStreetString = addressStreet.getText().toString();
                 String addressNumberString = addressNumber.getText().toString();
+                String cityString = cityEdit.getText().toString();
 
                 String daysStatusText = numDaysReminder.getText().toString();
                 int reminderDays = parseDaysFromDayStatusText(daysStatusText);
 
+                profileModel.setZipCode(zipString);
                 profileModel.setNumDaysOut(reminderDays);
                 profileModel.setFirstName(firstNameString);
                 profileModel.setLastName(lastNameString);
+                profileModel.setCity(cityString);
+                String[] birthDate = dateOfBirthDate.split("/");
+                if (birthDate.length == 3){
+                    profileModel.setMonthOfBirthMM(Integer.parseInt(birthDate[0]));
+                    profileModel.setDayOfBirthDD(Integer.parseInt(birthDate[1]));
+                    profileModel.setYearOfBirthCCYY(Integer.parseInt(birthDate[2]));
+                }
+
                 try {
                     profileModel.setHouseNumber(addressNumberString);
                 }
@@ -163,6 +140,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
                 profileModel.setStreetName(addressStreetString);
             }
         });
+
 
         SeekBar daysBar = (SeekBar)profView.findViewById(R.id.numDaysSeekBarID);
         daysBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -212,7 +190,6 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
             }
         });
 
-
         return profView;
     }
 
@@ -229,18 +206,6 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        mYear = year;
-        mMonth = monthOfYear;
-        mDay = dayOfMonth;
-        updateDisplay();
-    }
-
-    private void updateDisplay() {
-        dayOfBirthView.setText(mMonth + "/" + mDay + "/" + mYear);
     }
 
     public class SaveProfileTask extends AsyncTask<ProfileModel, Void, Boolean> {
@@ -348,14 +313,30 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
             TextView dateOfBirth = (TextView)profView.findViewById(R.id.dateOfBirthid);
             TextView homeNo = (TextView)profView.findViewById(R.id.houseNumberId);
             TextView homeSt = (TextView)profView.findViewById(R.id.homeAddressStreetId);
+            SeekBar reminderBar = (SeekBar)profView.findViewById(R.id.numDaysSeekBarID);
+            TextView numDaysText = (TextView)profView.findViewById(R.id.daysNumberFieldID);
+            TextView city = (TextView)profView.findViewById(R.id.cityEditID);
+            Spinner state = (Spinner)profView.findViewById(R.id.state_spinner);
+            TextView zipCode = (TextView)profView.findViewById(R.id.zipEditID);
 
             if (profileModel != null) {
+                zipCode.setText(profileModel.getZipCode());
+                city.setText(profileModel.getCity());
+                state.setSelection(0);
                 firstName.setText(profileModel.getFirstName());
                 lastName.setText(profileModel.getLastName());
 
-                Date dob = generateDateOfBirth();
-                if (dob != null)
-                    dateOfBirth.setText(dob.toString());
+                reminderBar.setProgress(profileModel.getNumDaysOut());
+
+                if (profileModel.getNumDaysOut()== 0) numDaysText.setText("1 Day Before Elections");
+                else numDaysText.setText(Integer.toString(profileModel.getNumDaysOut() + 1) + " Days Before Election");
+
+
+                int month = profileModel.getMonthOfBirthMM();
+                int year = profileModel.getYearOfBirthCCYY();
+                int day = profileModel.getDayOfBirthDD();
+                dateOfBirth.setText((month + 1) + "/" + day + "/" + year);
+
                 homeNo.setText(profileModel.getHouseNumber());
                 homeSt.setText(profileModel.getStreetName());
             }
