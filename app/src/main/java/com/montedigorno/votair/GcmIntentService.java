@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.NotificationCompat;
-import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -33,11 +32,11 @@ public class GcmIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        // The getMessageType() intent parameter must be the intent you received
-        // in your BroadcastReceiver.
+
+        // The getMessageType() intent parameter must be the intent you received in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
 
-        if (extras != null && !extras.isEmpty()) {  // has effect of unparcelling Bundle
+        if (extras != null && !extras.isEmpty()) {  // has effect of un-parcelling Bundle
             // Since we're not using two way messaging, this is all we really to check for
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 Logger.getLogger("GCM_RECEIVED").log(Level.INFO, extras.toString());
@@ -52,11 +51,8 @@ public class GcmIntentService extends IntentService {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                // This will pop up a simple temporary notification (or toast) on the bottom of the screen.
-                // Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-
                 // This will create a notification and an Intent for that notification.
-                // The Intent specifies what action should be performed, in this case, MainActivity.
+                // The Intent specifies MainActivity.
                 // Once the notification is built we call notify().
                 Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
                 notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);

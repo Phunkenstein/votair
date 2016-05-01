@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +18,16 @@ import android.widget.TextView;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
-    private List<String> _listDataHeader; // header titles
-    // child data in format of header title, child title
-    private HashMap<String, List<String>> _listDataChild;
 
-    public ExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<String>> listChildData) {
+    // Child data in format of header title, child title
+    private HashMap<String, List<String>> _listDataChild;
+    private List<String> _listDataHeader; // header titles
+    public ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<String>> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;  //Elections
         this._listDataChild = listChildData;  //Data items for each election
     }
+
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
@@ -41,27 +39,20 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return childPosition;
     }
 
-    //Needed for override below
-    public Context get_context(){return _context;}
-    //this is overridden(again) in the actual adapter declaration in ElectionFragment.
     @Override
-    public View getChildView(int groupPosition, final int childPosition,
-                             boolean isLastChild, View convertView, ViewGroup parent) {
-
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final String childText = (String) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.main_list_item, null);
         }
 
-        TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
-
+        TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
         txtListChild.setText(childText);
         txtListChild.setTextColor(_context.getResources().getColor(R.color.textColor));
 
+        // Make date bold, items normal, and info italic
         if( childPosition == 0 ) {
             txtListChild.setTypeface(null, Typeface.BOLD);
         } else if (isLastChild) {
@@ -95,35 +86,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded,
-                             View convertView, ViewGroup parent) {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this._context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater infalInflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.main_list, null);
         }
 
-        TextView lblListHeader = (TextView) convertView
-                .findViewById(R.id.lblListHeader);
+        TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setTextColor(_context.getResources().getColor(R.color.textColorPrimary));
         lblListHeader.setText(headerTitle);
 
-//        switch (groupPosition % 3) {
-//            case 0:
-//                lblListHeader.setBackgroundColor(Color.RED);
-//                lblListHeader.setTextColor(Color.WHITE);
-//                break;
-//            case 1:
-//                lblListHeader.setBackgroundColor(Color.WHITE);
-//                lblListHeader.setTextColor(Color.BLUE);
-//                break;
-//            case 2:
-//                lblListHeader.setBackgroundColor(Color.BLUE);
-//                lblListHeader.setTextColor(Color.WHITE);
-//                break;
-//        }
         return convertView;
     }
 
@@ -136,5 +110,4 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-
 }

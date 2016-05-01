@@ -3,7 +3,6 @@ package com.montedigorno.votair;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.content.Context;
-import android.widget.Toast;
 
 import com.example.uwm.myapplication.backend.registration.Registration;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -21,10 +20,10 @@ import java.util.logging.Logger;
  * Ref: https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/GcmEndpoints
  */
 class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
+    // Fields
     private static Registration regService = null;
     private GoogleCloudMessaging gcm;
     private Context context;
-
     private static final String SENDER_ID = "933682362008";
     public static final String PREFS_NAME = "ProfilePrefs";
 
@@ -47,7 +46,6 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
                             abstractGoogleClientRequest.setDisableGZipContent(true);
                         }
                     });
-            // end of optional local run code
 
             regService = builder.build();
         }

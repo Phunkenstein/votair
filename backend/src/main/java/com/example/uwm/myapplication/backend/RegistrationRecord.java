@@ -7,7 +7,6 @@ import com.googlecode.objectify.annotation.Index;
 /** The Objectify object model for device registrations we are persisting */
 @Entity
 public class RegistrationRecord {
-
     @Id
     Long id;
 
