@@ -157,8 +157,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showDatePickerDialog(View v) {
-        DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-    }
 }

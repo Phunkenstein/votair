@@ -1,5 +1,6 @@
 package com.montedigorno.votair;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.SeekBar;
@@ -33,6 +35,7 @@ import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,27 +50,22 @@ import java.util.List;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class ProfileFragment extends Fragment implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
 
     private SharedPreferences profile;
     private Context context;
     private ProfileModel profileModel;
     private View profView;
     public static final String PREFS_NAME = "ProfilePrefs";
-
-//    private OnFragmentInteractionListener mListener;
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    public static TextView dayOfBirthView;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ProfileFragment newInstance(Context context) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -88,7 +86,6 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         System.out.println("election task complete");
 
     }
-
 
     private Date generateDateOfBirth() {
 
@@ -207,6 +204,15 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         partySpinner.setAdapter(partyAdapter);
 
+        dayOfBirthView = (TextView) profView.findViewById(R.id.dateOfBirthid);
+        dayOfBirthView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+
+
         return profView;
     }
 
@@ -223,6 +229,18 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        mYear = year;
+        mMonth = monthOfYear;
+        mDay = dayOfMonth;
+        updateDisplay();
+    }
+
+    private void updateDisplay() {
+        dayOfBirthView.setText(mMonth + "/" + mDay + "/" + mYear);
     }
 
     public class SaveProfileTask extends AsyncTask<ProfileModel, Void, Boolean> {
@@ -267,6 +285,31 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
         }
+    }
+
+    public void showDatePickerDialog() {
+        DatePickerFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
+
+    public static class DatePickerFragment extends android.support.v4.app.DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public DatePickerDialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+
+            dayOfBirthView.setText((month + 1) + "/" + day + "/" + year);
+        }
+
     }
 
     public class FetchProfileTask extends AsyncTask<String, Void, ProfileModel> {
