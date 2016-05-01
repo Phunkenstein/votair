@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
@@ -17,8 +16,6 @@ import static com.example.uwm.myapplication.backend.OfyService.ofy;
 public class PushNotifications extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            System.out.println("In The Cron Job");
-
             // Get a list of elections, max 10.
             List<ElectionModel> records = ofy().load().type(ElectionModel.class).limit(10).list();
             for(ElectionModel record : records) {
@@ -36,13 +33,11 @@ public class PushNotifications extends HttpServlet {
                 }
             }
         }
-        catch (Exception ex) {//Log any exceptions
-        }
+        catch (Exception ex) {}
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
 }

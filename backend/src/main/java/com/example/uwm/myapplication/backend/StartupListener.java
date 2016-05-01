@@ -1,22 +1,14 @@
 package com.example.uwm.myapplication.backend;
 
-
-import com.example.uwm.myapplication.backend.models.ElectionModel;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+// Import our Models and our custom objectify wrapper.
+import com.example.uwm.myapplication.backend.models.ElectionModel;
+import com.example.uwm.myapplication.backend.models.ProfileModel;
 import static com.example.uwm.myapplication.backend.OfyService.ofy;
 
 /**
@@ -26,12 +18,15 @@ public class StartupListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        // startup code here
-        // ofy().clear();
+        // Clear the elections on startup to prevent duplicates.
         List<Key<ElectionModel>> keys = ofy().load().type(ElectionModel.class).keys().list();
         ofy().delete().keys(keys).now();
 
-        //Election 1
+        // DEV - Clear the profile models to test profile redirect.
+        List<Key<ProfileModel>> pkeys = ofy().load().type(ProfileModel.class).keys().list();
+        ofy().delete().keys(pkeys).now();
+
+        // Election 1
         ElectionModel eleModel1 = new ElectionModel();
         eleModel1.setElectionName("Presidential");
         eleModel1.setElectionDate("11-08-2016");
@@ -86,8 +81,5 @@ public class StartupListener implements ServletContextListener {
     }
 
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-        // shutdown code here
-    }
-
+    public void contextDestroyed(ServletContextEvent sce) {}
 }

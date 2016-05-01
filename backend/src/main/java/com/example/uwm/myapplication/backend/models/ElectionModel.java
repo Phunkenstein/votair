@@ -1,9 +1,7 @@
 package com.example.uwm.myapplication.backend.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -22,15 +20,13 @@ public class ElectionModel {
     private String electionName;
     @Index
     private String electionDate;
+
     private String electionDateFormat = "MM-dd-yyyy";  //This will be in SimpleDateFormat, IE MM/dd/yyyy
-
     private String registrationDeadline;
-
     private String otherDeadlineTitle;
     private String otherDeadline;
 
     private List<String> ballotItems;
-
     private List<String> info;
 
     public String getElectionName() {

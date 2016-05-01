@@ -1,9 +1,3 @@
-/*
-   For step-by-step instructions on connecting your Android application to this backend module,
-   see "App Engine Backend with Google Cloud Messaging" template documentation at
-   https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/GcmEndpoints
-*/
-
 package com.example.uwm.myapplication.backend;
 
 import com.example.uwm.myapplication.backend.models.ProfileModel;
@@ -31,6 +25,7 @@ import static com.example.uwm.myapplication.backend.OfyService.ofy;
  * authentication! If this app is deployed, anyone can access this endpoint! If
  * you'd like to add authentication, take a look at the documentation.
  */
+
 @Api(
   name = "messaging",
   version = "v1",
@@ -40,6 +35,7 @@ import static com.example.uwm.myapplication.backend.OfyService.ofy;
     packagePath=""
   )
 )
+
 public class MessagingEndpoint {
     private static final Logger log = Logger.getLogger(MessagingEndpoint.class.getName());
 
@@ -58,10 +54,12 @@ public class MessagingEndpoint {
             log.warning("Not sending message because it is empty");
             return;
         }
+
         // crop longer messages
         if (message.length() > 1000) {
             message = message.substring(0, 1000) + "[...]";
         }
+
         Sender sender = new Sender(API_KEY);
         Message msg = new Message.Builder().addData("message", message).build();
 

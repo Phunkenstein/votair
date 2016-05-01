@@ -14,7 +14,6 @@ public class ProfileModel {
         regId = "";
         firstName = "";
         lastName = "";
-        // For testing purposes an unfilled profile should get every notification.
         numDaysOut = 999;
         streetName = "";
         state = "";
@@ -30,8 +29,10 @@ public class ProfileModel {
 
     @Index
     private String firstName;
+
     @Index
     private String lastName;
+
     @Index
     private int numDaysOut;
 

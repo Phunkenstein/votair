@@ -9,8 +9,6 @@ public class MyResponse {
     private List<Long> myData;
     private boolean success = false;
 
-
-
     public boolean isSuccess() {
         return success;
     }

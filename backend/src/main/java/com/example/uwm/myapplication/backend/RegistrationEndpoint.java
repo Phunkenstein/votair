@@ -1,9 +1,3 @@
-/*
-   For step-by-step instructions on connecting your Android application to this backend module,
-   see "App Engine Backend with Google Cloud Messaging" template documentation at
-   https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/master/GcmEndpoints
-*/
-
 package com.example.uwm.myapplication.backend;
 
 import com.google.api.server.spi.config.Api;
