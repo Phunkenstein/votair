@@ -52,6 +52,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
     private int mMonth;
     private int mDay;
     public static TextView dayOfBirthView;
+    public static final String BACKEND_ADDR = "https://voter-helper-1239.appspot.com/_ah/api/";
 
     public ProfileFragment() {
     }
@@ -217,7 +218,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
             if (reqService == null) {
                 Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
 //                Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                        .setRootUrl(BACKEND_ADDR)
                         .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                             @Override
                             public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -285,7 +286,7 @@ public class ProfileFragment extends Fragment implements AdapterView.OnItemSelec
         protected ProfileModel doInBackground(String... params) {
             if (reqService == null) {
                 Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                        .setRootUrl(BACKEND_ADDR)
                         .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                             @Override
                             public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {

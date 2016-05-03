@@ -26,6 +26,8 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
     private Context context;
     private static final String SENDER_ID = "933682362008";
     public static final String PREFS_NAME = "ProfilePrefs";
+//    public static final String BACKEND_ADDR = "http://10.0.2.2:8080/_ah/api/";
+    public static final String BACKEND_ADDR = "https://voter-helper-1239.appspot.com/_ah/api/";
 
     public GcmRegistrationAsyncTask(Context context) {
         this.context = context;
@@ -38,7 +40,7 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
                     new AndroidJsonFactory(), null)
                     // Need setRootUrl and setGoogleClientRequestInitializer only for local testing,
                     // otherwise they can be skipped
-                    .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                    .setRootUrl(BACKEND_ADDR)
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest)

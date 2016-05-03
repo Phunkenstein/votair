@@ -47,6 +47,7 @@ public class ElectionFragment extends Fragment {
     // Fields for saving the regID and deadlines
     private SharedPreferences profile;
     public static final String PREFS_NAME = "ProfilePrefs";
+    public static final String BACKEND_ADDR = "https://voter-helper-1239.appspot.com/_ah/api/";
 
 
     @Override
@@ -208,7 +209,7 @@ public class ElectionFragment extends Fragment {
             // Initialize the request service if we have not yet.
             if(reqService == null) {
                 Request.Builder builder = new Request.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
-                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                        .setRootUrl(BACKEND_ADDR)
                         .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                             @Override
                             public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {

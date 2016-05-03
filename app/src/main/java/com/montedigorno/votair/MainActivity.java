@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    public static final String BACKEND_ADDR = "https://voter-helper-1239.appspot.com/_ah/api/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
